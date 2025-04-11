@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const API = axios.create({
     baseURL: "https://server-eta-sable.vercel.app/api/",
 })
@@ -9,7 +8,16 @@ export const UserSignUp = async (data) => await API.post("user/signup", data)
 
 export const UserSignIn = async (data) => await API.post("user/signin", data)
 
-export const getAllProperty = async (filter) => await API.get(`/property/get?${filter}`)
+export const getAllProperty = async (filter) => {
+    try {
+        const response = await API.get(`/property/get?${filter}`);
+        console.log('API Response:', response);
+        return response;
+    } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+    }
+}
 
 export const getPropertyDetails = async (id) => await API.get(`/property/${id}`)
 
@@ -37,6 +45,3 @@ export const deleteFromFavourite = async (propertyId, token) =>
         { propertyId },
         { headers: { Authorization: `Bearer ${token}` } }
     )
-
-
-    
