@@ -12,7 +12,7 @@ const PropertyGrid = styled.div`
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding-bottom: 40px; // Add padding at bottom for better scroll experience
+  padding-bottom: 40px;
   
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -51,6 +51,15 @@ const Container = styled.div`
   }
 `;
 
+const NoResults = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.text_primary};
+`;
+
 const PropertyListing = () => {
   const [loading, setLoading] = useState(false);
   const [properties, setProperties] = useState([]);
@@ -62,13 +71,22 @@ const PropertyListing = () => {
     setLoading(true);
     try {
       const res = await getAllProperty(filter);
-      if (!res.data) {
+      console.log('Component received:', res);
+      
+      if (!res?.data) {
+        console.log('No data in response');
         setProperties([]);
         return;
       }
-      setProperties(res.data);
+      
+      // Check if we have the new format (data.properties) or old format (data array directly)
+      const propertyData = Array.isArray(res.data) ? res.data : (res.data.properties || []);
+      console.log('Setting properties:', propertyData);
+      
+      setProperties(propertyData);
     } catch (err) {
-      console.error(err);
+      console.error('Component Error:', err);
+      setProperties([]);
     } finally {
       setLoading(false);
     }
@@ -78,22 +96,27 @@ const PropertyListing = () => {
     getproperty();
   }, [getproperty]);
 
+  console.log('Rendering with properties:', properties);
+
   return (
     <Container>
       {loading ? (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <CircularProgress />
         </div>
-      ) : (
+      ) : Array.isArray(properties) && properties.length > 0 ? (
         <PropertyGrid>
           {properties.map((property) => (
             <PropertyCard key={property._id} property={property} />
           ))}
         </PropertyGrid>
+      ) : (
+        <NoResults>
+          No properties found {loc ? `in ${loc}` : ''}
+        </NoResults>
       )}
     </Container>
   );
 };
-
 
 export default PropertyListing;
