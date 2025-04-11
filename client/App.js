@@ -12,8 +12,8 @@ import Bookings from "./pages/Bookings";
 import background from "./utils/Images/Background.svg";
 import Contact from "./pages/Contact";
 import Blogs from "./pages/Blogs";
-import { SpeedInsights } from "@vercel/speed-insights"
-import { Analytics } from "@vercel/analytics"
+import { SpeedInsights } from "@vercel/speed-insights/react"
+import { Analytics } from "@vercel/analytics/react"
 import BlogDetails from "./pages/BlogDetails";
 import Favorites from "./pages/Favorites";
 
