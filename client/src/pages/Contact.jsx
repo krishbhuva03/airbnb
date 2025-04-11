@@ -112,7 +112,7 @@ const Contact = () => {
 
     try {
       console.log('Sending data:', formData);
-      const response = await axios.post('http://localhost:8080/api/contact/submit', formData);
+      const response = await axios.post('https://server-eta-sable.vercel.app/api/contact/submit', formData);
       console.log('Response:', response.data);
       
       if (response.data.success) {
