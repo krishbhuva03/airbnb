@@ -28,9 +28,25 @@ const Card = styled.div`
   overflow: hidden;
   background: white;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:active {
+      transform: scale(0.98);
+    }
+    
+    &:hover {
+      transform: none;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    border-radius: 12px;
+    gap: 12px;
   }
 `;
 const Image = styled.img`
@@ -38,6 +54,18 @@ const Image = styled.img`
   height: 220px;
   object-fit: cover;
   transition: all 0.3s ease-out;
+  
+  @media (max-width: 768px) {
+    height: 200px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 180px;
+  }
+  
+  @media (max-width: 320px) {
+    height: 160px;
+  }
 `;
 
 const Menu = styled.div`
@@ -64,8 +92,28 @@ const MenuItem = styled.div`
   z-index: 200;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
+  transition: all 0.2s ease;
+  
   &:hover {
     transform: scale(1.1);
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    width: 44px;
+    height: 44px;
+    
+    &:hover {
+      transform: none;
+    }
+    
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
   }
 `;
 const Rate = styled.div`
@@ -80,6 +128,7 @@ const Rate = styled.div`
   display: flex;
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
 `;
 
 const Top = styled.div`
@@ -106,11 +155,21 @@ const Details = styled.div`
   gap: 12px;
   flex-direction: column;
   padding: 16px 20px 20px;
+  
+  @media (max-width: 480px) {
+    padding: 12px 16px 16px;
+    gap: 10px;
+  }
 `;
 const Title = styled.div`
   font-size: 16px;
   font-weight: 700;
   color: ${({ theme }) => theme.text_primary};
+  line-height: 1.3;
+  
+  @media (max-width: 480px) {
+    font-size: 15px;
+  }
 `;
 const Desc = styled.div`
   font-size: 14px;
@@ -139,6 +198,19 @@ const Price = styled.div`
   font-weight: 600;
   color: ${({ theme }) => theme.text_primary};
   margin-top: 4px;
+  flex-wrap: wrap;
+  
+  @media (max-width: 480px) {
+    font-size: 20px;
+    gap: 8px;
+  }
+  
+  @media (max-width: 320px) {
+    font-size: 18px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
 `;
 const Strike = styled.div`
   font-size: 14px;

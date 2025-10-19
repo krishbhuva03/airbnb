@@ -19,29 +19,94 @@ const Container = styled.div`
   background: ${({ theme }) => theme.bg};
   border-radius: 12px 12px 0 0;
   overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+  
+  @media (max-width: 1024px) {
+    gap: 32px;
+    margin: 0 16px;
+    padding: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 24px;
+    margin: 0 12px;
+    padding: 16px 12px;
+    height: calc(100vh - 80px);
+  }
+  
+  @media (max-width: 480px) {
+    margin: 0;
+    padding: 12px 8px;
+    border-radius: 0;
+    gap: 20px;
+  }
 `;
 
 const Image = styled.img`
   width: 50%;
   border-radius: 6px;
   object-fit: cover;
+  max-height: 600px;
+  
+  @media (max-width: 1024px) {
+    width: 55%;
+    max-height: 500px;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    max-height: 300px;
+    order: -1;
+  }
+  
+  @media (max-width: 480px) {
+    max-height: 250px;
+    border-radius: 8px;
+  }
 `;
 
 const Right = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+  flex: 1;
+  
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 16px;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 700;
   color: ${({ theme }) => theme.text_primary};
+  line-height: 1.3;
+  margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 22px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 20px;
+  }
 `;
 
 const Desc = styled.p`
   font-size: 16px;
   color: ${({ theme }) => theme.text_primary};
+  line-height: 1.6;
+  margin: 0;
+  
+  @media (max-width: 480px) {
+    font-size: 15px;
+    line-height: 1.5;
+  }
 `;
 
 const Price = styled.div`
@@ -79,6 +144,20 @@ const BookingContainer = styled.div`
   .MuiTextField-root {
     width: 100%;
     background: ${({ theme }) => theme.bg};
+  }
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    gap: 14px;
+    margin-top: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 12px;
+    
+    .MuiTextField-root {
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
   }
 `;
 

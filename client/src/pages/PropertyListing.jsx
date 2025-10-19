@@ -12,12 +12,28 @@ const PropertyGrid = styled.div`
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding-bottom: 40px; // Add padding at bottom for better scroll experience
+  padding-bottom: 40px;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
   
   @media (max-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;
     padding-bottom: 20px;
+  }
+  
+  @media (max-width: 640px) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding-bottom: 16px;
   }
 `;
 
@@ -44,9 +60,19 @@ const Container = styled.div`
   }
 
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  
+  @media (max-width: 1024px) {
+    padding: 32px 24px;
+  }
   
   @media (max-width: 768px) {
-    padding: 20px;
+    padding: 24px 16px;
+    height: calc(100vh - 70px);
+  }
+  
+  @media (max-width: 480px) {
+    padding: 16px 12px;
     height: calc(100vh - 60px);
   }
 `;

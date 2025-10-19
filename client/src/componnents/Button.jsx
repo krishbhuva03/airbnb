@@ -20,8 +20,27 @@ const StyledButton = styled.button`
   padding: 16px 26px;
   box-shadow: 1px 20px 35px 0px ${({ theme }) => theme.primary + 40};
   border: 1px solid ${({ theme }) => theme.primary};
-  @media (max-width: 600px) {
-    padding: 8px 12px;
+  min-height: 44px;
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:active {
+      transform: scale(0.98);
+    }
+    
+    &:hover {
+      transform: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 8px;
   }
 
   ${({ type, theme }) =>
@@ -59,6 +78,10 @@ ${({ small }) =>
     small &&
     `
 padding: 10px 28px;
+
+@media (max-width: 480px) {
+  padding: 8px 20px;
+}
 `}
   ${({ outlined, theme }) =>
     outlined &&

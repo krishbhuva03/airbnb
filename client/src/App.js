@@ -2,6 +2,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { lightTheme } from "./utils/Themes";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./componnents/Navbar";
+import { Analytics } from "@vercel/analytics/react"
 import { useState } from "react";
 import Home from "./pages/Home";
 import Authentication from "./pages/Authentication";
@@ -74,6 +75,7 @@ function App() {
         )}
 
       </Container>
+      <Analytics />
     </BrowserRouter>
   </ThemeProvider>
   )

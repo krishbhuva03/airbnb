@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import Button from "./Button";
@@ -18,8 +18,14 @@ const Nav = styled.div`
   font-size: 1rem;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 5000;
   color: white;
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 480px) {
+    padding: 8px;
+  }
 `;
 const NavbarContainer = styled.div`
   width: 100%;
@@ -30,6 +36,16 @@ const NavbarContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   font-size: 1rem;
+  
+  @media (max-width: 768px) {
+    padding: 0 16px;
+    gap: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 12px;
+    gap: 8px;
+  }
 `;
 const NavLogo = styled.div`
   width: 100%;
@@ -43,6 +59,14 @@ const NavLogo = styled.div`
 `;
 const Logo = styled.img`
   height: 40px;
+  
+  @media (max-width: 768px) {
+    height: 36px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 32px;
+  }
 `;
 const NavItems = styled.ul`
   width: 100%;
@@ -88,32 +112,73 @@ const ButtonContainer = styled.div`
 const MobileIcon = styled.div`
   color: ${({ theme }) => theme.text_primary};
   display: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+  min-height: 44px;
+  min-width: 44px;
+  
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
   @media screen and (max-width: 768px) {
     display: flex;
     align-items: center;
+    justify-content: center;
   }
 `;
 
 const MobileMenu = styled.ul`
   display: flex;
   flex-direction: column;
-  align-items: start;
-  gap: 16px;
-  padding: 0 6px;
+  align-items: flex-start;
+  gap: 20px;
   list-style: none;
-  width: 80%;
-  padding: 12px 40px 24px 40px;
-  background: ${({ theme }) => theme.card_light + 99};
-  position: absolute;
-  top: 80px;
+  padding: 20px 24px 28px;
+  color: ${({ theme }) => theme.text_primary};
+  background: ${({ theme }) => theme.white + 'F2'};
+  position: fixed;
+  top: 60px;
+  left: 0;
   right: 0;
-  transition: all 0.6s ease-in-out;
-  transform: ${({ isOpen }) =>
-    isOpen ? "translateY(0)" : "translateY(-100%)"};
+  width: 100%;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+  transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.2s ease;
+  transform-origin: top;
+  transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(-110%)')};
   border-radius: 0 0 20px 20px;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
-  opacity: ${({ isOpen }) => (isOpen ? "100%" : "0")};
-  z-index: ${({ isOpen }) => (isOpen ? "1000" : "-1000")};
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
+  z-index: 5100;
+  backdrop-filter: blur(10px);
+
+  ${Navlink} {
+    color: ${({ theme }) => theme.text_primary};
+    border-bottom: none;
+    padding-bottom: 4px;
+  }
+
+  ${Navlink}.active {
+    color: ${({ theme }) => theme.primary};
+    border-bottom: 2px solid ${({ theme }) => theme.primary};
+  }
+  
+  @media (max-width: 480px) {
+    padding: 16px 16px 20px;
+    gap: 16px;
+    top: 56px;
+    max-height: calc(100vh - 56px);
+    border-radius: 0 0 16px 16px;
+  }
+  
+  @media (max-width: 320px) {
+    padding: 12px 12px 16px;
+    gap: 14px;
+    border-radius: 0 0 12px 12px;
+  }
 `;
 
 const Mobileicons = styled.div`
@@ -127,24 +192,48 @@ const Mobileicons = styled.div`
   }
 `;
 
+const Backdrop = styled.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 5050;
+  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
+  pointer-events: ${({ isOpen }) => (isOpen ? 'auto' : 'none')};
+  transition: opacity 0.2s ease;
+`;
+
 const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return ( 
   <Nav>
     <NavbarContainer>
-      <MobileIcon onClick={() => setIsOpen(!isOpen)}>
+      <MobileIcon onClick={() => setIsOpen(!isOpen)} aria-label="Toggle menu" role="button">
         <MenuRounded style={{color : "white"}}/>
       </MobileIcon>
       <NavLogo>
         <Logo src={LogoImg} />
       </NavLogo>
 
+      <Backdrop isOpen={isOpen} onClick={() => setIsOpen(false)} />
       {isOpen && (
         <MobileMenu isOpen={isOpen}>
-          <Navlink to="/" onClick={()=> setIsOpen(!isOpen)}>Home</Navlink>
-          <Navlink to="/properties" onClick={()=> setIsOpen(!isOpen)}>Place to stay</Navlink>
-          <Navlink to="/contact" onClick={()=> setIsOpen(!isOpen)}>Contact</Navlink>
-          <Navlink to="/blogs" onClick={()=> setIsOpen(!isOpen)}>Blogs</Navlink>
+          <Navlink to="/" onClick={()=> setIsOpen(false)}>Home</Navlink>
+          <Navlink to="/properties" onClick={()=> setIsOpen(false)}>Place to stay</Navlink>
+          <Navlink to="/contact" onClick={()=> setIsOpen(false)}>Contact</Navlink>
+          <Navlink to="/blogs" onClick={()=> setIsOpen(false)}>Blogs</Navlink>
           <div 
           style={{
             flex:1,
@@ -155,12 +244,12 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
             type="secondary" 
             text="Signup" 
             small
-            onClick={() => setOpenAuth(!openAuth)}
+            onClick={() => { setIsOpen(false); setOpenAuth(true); }}
             />
             <Button 
             text="SignIn" 
             small
-            onClick={()=> setOpenAuth(!openAuth)}
+            onClick={()=> { setIsOpen(false); setOpenAuth(true); }}
             />
           </div>
 
