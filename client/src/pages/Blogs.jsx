@@ -7,11 +7,29 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   color: white;
+  
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 8px;
+  }
 `;
 
 const Title = styled.h1`
   text-align: center;
   margin-bottom: 40px;
+  
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+    margin-bottom: 32px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+  }
 `;
 
 const BlogGrid = styled.div`
@@ -19,6 +37,22 @@ const BlogGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   padding: 20px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    padding: 16px;
+  }
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 12px 0;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 16px;
+  }
 `;
 
 const BlogCard = styled.div`
@@ -31,28 +65,64 @@ const BlogCard = styled.div`
   &:hover {
     transform: translateY(-5px);
   }
+  
+  @media (max-width: 480px) {
+    border-radius: 8px;
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:hover {
+      transform: none;
+    }
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 `;
 
 const BlogImage = styled.img`
   width: 100%;
   height: 200px;
   object-fit: cover;
+  
+  @media (max-width: 768px) {
+    height: 180px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 160px;
+  }
 `;
 
 const BlogContent = styled.div`
   padding: 20px;
+  
+  @media (max-width: 480px) {
+    padding: 16px;
+  }
 `;
 
 const BlogTitle = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 10px;
   color: white;
+  
+  @media (max-width: 480px) {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+  }
 `;
 
 const BlogExcerpt = styled.p`
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 15px;
   line-height: 1.6;
+  
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    margin-bottom: 12px;
+    line-height: 1.5;
+  }
 `;
 
 const ReadMore = styled.button`
@@ -63,9 +133,24 @@ const ReadMore = styled.button`
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s ease;
+  min-height: 44px;
 
   &:hover {
     background: ${({ theme }) => theme.primary_dark};
+  }
+  
+  @media (max-width: 480px) {
+    padding: 10px 20px;
+    width: 100%;
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:active {
+      transform: scale(0.98);
+    }
+    &:hover {
+      background: ${({ theme }) => theme.primary};
+    }
   }
 `;
 

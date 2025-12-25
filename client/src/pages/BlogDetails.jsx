@@ -7,6 +7,14 @@ const Container = styled.div`
   max-width: 900px;
   margin: 0 auto;
   color: white;
+  
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 8px;
+  }
 `;
 
 const BackButton = styled.button`
@@ -21,19 +29,54 @@ const BackButton = styled.button`
   align-items: center;
   gap: 8px;
   transition: background 0.3s ease;
+  min-height: 44px;
 
   &:hover {
     background: ${({ theme }) => theme.primary_dark};
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 16px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:active {
+      transform: scale(0.98);
+    }
+    &:hover {
+      background: ${({ theme }) => theme.primary};
+    }
   }
 `;
 
 const BlogHeader = styled.div`
   margin-bottom: 30px;
+  
+  @media (max-width: 480px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  
+  @media (max-width: 320px) {
+    font-size: 1.4rem;
+  }
 `;
 
 const MetaInfo = styled.div`
@@ -41,6 +84,13 @@ const MetaInfo = styled.div`
   gap: 20px;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  
+  @media (max-width: 480px) {
+    gap: 10px;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
 `;
 
 const FeaturedImage = styled.img`
@@ -49,6 +99,21 @@ const FeaturedImage = styled.img`
   object-fit: cover;
   border-radius: 10px;
   margin-bottom: 30px;
+  
+  @media (max-width: 768px) {
+    height: 300px;
+    margin-bottom: 24px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 220px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 320px) {
+    height: 180px;
+  }
 `;
 
 const Content = styled.div`
@@ -61,6 +126,27 @@ const Content = styled.div`
 
   p {
     margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 24px;
+    font-size: 1rem;
+    line-height: 1.7;
+    
+    p {
+      margin-bottom: 16px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 20px 16px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    line-height: 1.6;
+    
+    p {
+      margin-bottom: 14px;
+    }
   }
 `;
 
