@@ -12,12 +12,32 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  
+  @media (max-width: 768px) {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px 8px;
+    gap: 14px;
+  }
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   color: ${({ theme }) => theme.text_primary};
   margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
 `;
 
 const BookingCard = styled.div`
@@ -32,6 +52,25 @@ const BookingCard = styled.div`
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
+  
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 12px;
+    gap: 12px;
+  }
+  
+  @media (hover: none) and (pointer: coarse) {
+    &:hover {
+      transform: none;
+    }
+    &:active {
+      transform: scale(0.98);
+    }
+  }
 `;
 
 const PropertyImage = styled.img`
@@ -39,22 +78,44 @@ const PropertyImage = styled.img`
   height: 140px;
   object-fit: cover;
   border-radius: 6px;
+  
+  @media (max-width: 640px) {
+    width: 100%;
+    height: 180px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 160px;
+    border-radius: 8px;
+  }
 `;
 
 const PropertyInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  
+  @media (max-width: 480px) {
+    gap: 6px;
+  }
 `;
 
 const PropertyTitle = styled.h2`
   font-size: 18px;
   color: ${({ theme }) => theme.text_primary};
+  
+  @media (max-width: 480px) {
+    font-size: 16px;
+  }
 `;
 
 const DateInfo = styled.div`
   font-size: 14px;
   color: ${({ theme }) => theme.text_secondary};
+  
+  @media (max-width: 480px) {
+    font-size: 13px;
+  }
 `;
 
 const NoBookings = styled.div`
@@ -65,6 +126,21 @@ const NoBookings = styled.div`
   height: 200px;
   gap: 16px;
   color: ${({ theme }) => theme.text_secondary};
+  text-align: center;
+  
+  @media (max-width: 480px) {
+    padding: 0 16px;
+    height: 180px;
+    gap: 12px;
+    
+    h3 {
+      font-size: 1.1rem;
+    }
+    
+    p {
+      font-size: 0.9rem;
+    }
+  }
 `;
 
 const Bookings = () => {
