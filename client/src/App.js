@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import Blogs from "./pages/Blogs";
 import BlogDetails from "./pages/BlogDetails";
 import Favorites from "./pages/Favorites";
+import LiveServices from "./pages/LiveServices";
 
 const Container = styled.div`
   width: 100%;
@@ -68,6 +69,7 @@ function App() {
           <Route path="/blogs" exact element={<Blogs />} />
           <Route path="/blogs/:id" element={<BlogDetails />} />
           <Route path="/favourite" element={<Favorites />} />
+          <Route path="/live-services" element={<LiveServices />} />
         </Routes>
 
         {openAuth && (

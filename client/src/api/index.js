@@ -38,5 +38,18 @@ export const deleteFromFavourite = async (propertyId, token) =>
         { headers: { Authorization: `Bearer ${token}` } }
     )
 
+// Chat APIs
+export const getChatRooms = async (token) =>
+    await API.get(`/chat/rooms`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
 
-    
+export const checkAdminStatus = async (token) =>
+    await API.get(`/chat/admin-status`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const getChatHistory = async (roomId, token) =>
+    await API.get(`/chat/history/${roomId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });

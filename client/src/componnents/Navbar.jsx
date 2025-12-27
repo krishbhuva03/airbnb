@@ -234,6 +234,7 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
           <Navlink to="/properties" onClick={()=> setIsOpen(false)}>Place to stay</Navlink>
           <Navlink to="/contact" onClick={()=> setIsOpen(false)}>Contact</Navlink>
           <Navlink to="/blogs" onClick={()=> setIsOpen(false)}>Blogs</Navlink>
+          <Navlink to="/live-services" onClick={()=> setIsOpen(false)}>Live Services</Navlink>
           <div 
           style={{
             flex:1,
@@ -260,6 +261,7 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
         <Navlink to="/properties">Place to stay</Navlink>
         <Navlink to="/contact">Contact</Navlink>
         <Navlink to="/blogs">Blogs</Navlink>
+        <Navlink to="/live-services">Live Services</Navlink>
       </NavItems>
 
       
