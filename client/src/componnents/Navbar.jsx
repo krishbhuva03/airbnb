@@ -161,8 +161,8 @@ const MobileMenu = styled.ul`
   gap: 20px;
   list-style: none;
   padding: 20px 24px 28px;
-  color: ${({ theme }) => theme.text_primary};
-  background: ${({ theme }) => theme.white + 'F2'};
+  color: #FFFFFF;
+  background: #1A1A24;
   position: fixed;
   top: 60px;
   left: 0;
@@ -174,15 +174,17 @@ const MobileMenu = styled.ul`
   transform-origin: top;
   transform: ${({ isOpen }) => (isOpen ? 'translateY(0)' : 'translateY(-110%)')};
   border-radius: 0 0 20px 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   opacity: ${({ isOpen }) => (isOpen ? '1' : '0')};
   z-index: 5100;
-  backdrop-filter: blur(10px);
 
   ${Navlink} {
-    color: ${({ theme }) => theme.text_primary};
+    color: #FFFFFF;
     border-bottom: none;
     padding-bottom: 4px;
+    font-size: 1.1rem;
+    padding: 8px 0;
+    width: 100%;
   }
 
   ${Navlink}.active {
@@ -191,16 +193,16 @@ const MobileMenu = styled.ul`
   }
   
   @media (max-width: 480px) {
-    padding: 16px 16px 20px;
-    gap: 16px;
+    padding: 16px 16px 24px;
+    gap: 12px;
     top: 56px;
     max-height: calc(100vh - 56px);
     border-radius: 0 0 16px 16px;
   }
   
   @media (max-width: 320px) {
-    padding: 12px 12px 16px;
-    gap: 14px;
+    padding: 12px 12px 20px;
+    gap: 10px;
     border-radius: 0 0 12px 12px;
   }
 `;
@@ -283,25 +285,30 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
       {isOpen && (
         <MobileMenu isOpen={isOpen}>
           <Navlink to="/" onClick={()=> setIsOpen(false)}>Home</Navlink>
-          <Navlink to="/properties" onClick={()=> setIsOpen(false)}>Stays</Navlink>
+          <Navlink to="/properties" onClick={()=> setIsOpen(false)}>Properties</Navlink>
           <Navlink to="/discover" onClick={()=> setIsOpen(false)}>Discover</Navlink>
           <Navlink to="/blogs" onClick={()=> setIsOpen(false)}>Blogs</Navlink>
           <Navlink to="/live-services" onClick={()=> setIsOpen(false)}>Concierge</Navlink>
           <div 
           style={{
-            flex:1,
+            width: "100%",
             display: "flex",
-            gap: "16px",
+            gap: "12px",
+            marginTop: "8px",
+            paddingTop: "16px",
+            borderTop: "1px solid rgba(255,255,255,0.15)",
           }}>
             <Button 
-            type="secondary" 
-            text="Signup" 
+            outlined
+            text="Sign Up" 
             small
+            flex
             onClick={() => { setIsOpen(false); setOpenAuth(true); }}
             />
             <Button 
-            text="SignIn" 
+            text="Sign In" 
             small
+            flex
             onClick={()=> { setIsOpen(false); setOpenAuth(true); }}
             />
           </div>
@@ -310,7 +317,7 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
 
       <NavItems>
         <Navlink to="/">Home</Navlink>
-        <Navlink to="/properties">Stays</Navlink>
+        <Navlink to="/properties">Properties</Navlink>
         <Navlink to="/discover">Discover</Navlink>
         <Navlink to="/blogs">Blogs</Navlink>
         <Navlink to="/live-services">Concierge</Navlink>

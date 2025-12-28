@@ -23,8 +23,15 @@ const PageContainer = styled.div`
   
   @media (max-width: 768px) {
     flex-direction: column;
-    padding: 16px;
-    height: calc(100vh - 80px);
+    padding: 12px;
+    gap: 12px;
+    height: calc(100vh - 70px);
+  }
+  
+  @media (max-width: 480px) {
+    padding: 8px;
+    gap: 8px;
+    height: calc(100vh - 60px);
   }
 `;
 

@@ -87,8 +87,14 @@ padding: 10px 28px;
     outlined &&
     `
 background: transparent;
-color: ${theme.primary};
-  box-shadow: none;
+color: #FFFFFF;
+border: 1px solid rgba(255,255,255,0.5);
+box-shadow: none;
+
+&:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: #FFFFFF;
+}
 `}
   ${({ full }) =>
     full &&

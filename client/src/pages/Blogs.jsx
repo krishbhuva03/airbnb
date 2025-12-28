@@ -129,19 +129,23 @@ const ReadMore = styled.button`
   background: ${({ theme }) => theme.primary};
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 5px;
+  padding: 10px 20px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
   min-height: 44px;
+  font-weight: 500;
+  font-size: 0.95rem;
 
   &:hover {
     background: ${({ theme }) => theme.primary_dark};
+    transform: translateY(-2px);
   }
   
   @media (max-width: 480px) {
-    padding: 10px 20px;
-    width: 100%;
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    min-height: 40px;
   }
   
   @media (hover: none) and (pointer: coarse) {
@@ -150,6 +154,7 @@ const ReadMore = styled.button`
     }
     &:hover {
       background: ${({ theme }) => theme.primary};
+      transform: none;
     }
   }
 `;

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Wallpaper Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 30px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        #preview-image {
+            width: 100%;
+            display: block;
+            transition: filter 0.3s ease;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            transition: background 0.3s ease;
+        }
+
+        .controls {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .control-group {
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .control-group span {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            appearance: none;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.5);
+        }
+
+        .preset-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .preset-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .preset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .preset-btn.original {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+        }
+
+        .preset-btn.twilight {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .preset-btn.midnight {
+            background: linear-gradient(135deg, #0c1445, #1a237e);
+            color: white;
+        }
+
+        .preset-btn.moody {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+            color: white;
+        }
+
+        .preset-btn.cinema {
+            background: linear-gradient(135deg, #00c6fb, #005bea);
+            color: white;
+        }
+
+        .download-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .upload-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .upload-btn {
+            padding: 14px 32px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(17, 153, 142, 0.4);
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        .instructions {
+            text-align: center;
+            opacity: 0.7;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌙 Dark Mode Wallpaper Generator</h1>
+        
+        <div class="upload-section">
+            <input type="file" id="file-input" accept="image/*">
+            <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                📁 Upload Your Image
+            </button>
+            <p class="instructions">Upload an image to apply dark mode filters</p>
+        </div>
+
+        <div class="image-container">
+            <img id="preview-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='600' viewBox='0 0 900 600'%3E%3Crect fill='%23374151' width='900' height='600'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%239CA3AF' font-family='Arial' font-size='24'%3EUpload an image to preview%3C/text%3E%3C/svg%3E" alt="Preview">
+            <div class="overlay" id="overlay"></div>
+        </div>
+
+        <div class="controls">
+            <div class="preset-buttons">
+                <button class="preset-btn original" onclick="applyPreset('original')">✨ Original</button>
+                <button class="preset-btn twilight" onclick="applyPreset('twilight')">🌆 Twilight</button>
+                <button class="preset-btn midnight" onclick="applyPreset('midnight')">🌙 Midnight</button>
+                <button class="preset-btn moody" onclick="applyPreset('moody')">🎭 Moody</button>
+                <button class="preset-btn cinema" onclick="applyPreset('cinema')">🎬 Cinematic</button>
+            </div>
+
+            <div class="control-group">
+                <label>Brightness <span id="brightness-value">70%</span></label>
+                <input type="range" id="brightness" min="20" max="150" value="70" oninput="updateFilters()">
+            </div>
+
+            <div class="control-group">
+                <label>Contrast <span id="contrast-value">120%</span></label>
+                <input type="range" id="contrast" min="50" max="200" value="120" oninput="updateFilters()">
+            </div>
+
+            <div class="control-group">
+                <label>Saturation <span id="saturation-value">80%</span></label>
+                <input type="range" id="saturation" min="0" max="200" value="80" oninput="updateFilters()">
+            </div>
+
+            <div class="control-group">
+                <label>Hue Rotate <span id="hue-value">200°</span></label>
+                <input type="range" id="hue" min="0" max="360" value="200" oninput="updateFilters()">
+            </div>
+
+            <div class="control-group">
+                <label>Blue Overlay <span id="overlay-value">30%</span></label>
+                <input type="range" id="overlay-opacity" min="0" max="80" value="30" oninput="updateFilters()">
+            </div>
+
+            <button class="download-btn" onclick="downloadImage()">
+                ⬇️ Download Dark Mode Wallpaper
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const image = document.getElementById('preview-image');
+        const overlay = document.getElementById('overlay');
+        const fileInput = document.getElementById('file-input');
+
+        let originalImageSrc = null;
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    originalImageSrc = event.target.result;
+                    image.src = originalImageSrc;
+                    applyPreset('twilight'); // Apply dark mode preset by default
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function updateFilters() {
+            const brightness = document.getElementById('brightness').value;
+            const contrast = document.getElementById('contrast').value;
+            const saturation = document.getElementById('saturation').value;
+            const hue = document.getElementById('hue').value;
+            const overlayOpacity = document.getElementById('overlay-opacity').value;
+
+            // Update value displays
+            document.getElementById('brightness-value').textContent = brightness + '%';
+            document.getElementById('contrast-value').textContent = contrast + '%';
+            document.getElementById('saturation-value').textContent = saturation + '%';
+            document.getElementById('hue-value').textContent = hue + '°';
+            document.getElementById('overlay-value').textContent = overlayOpacity + '%';
+
+            // Apply CSS filters
+            image.style.filter = `
+                brightness(${brightness}%) 
+                contrast(${contrast}%) 
+                saturate(${saturation}%) 
+                hue-rotate(${hue}deg)
+            `;
+
+            // Apply overlay
+            overlay.style.background = `rgba(15, 23, 42, ${overlayOpacity / 100})`;
+        }
+
+        function applyPreset(preset) {
+            const presets = {
+                original: { brightness: 100, contrast: 100, saturation: 100, hue: 0, overlay: 0 },
+                twilight: { brightness: 70, contrast: 120, saturation: 80, hue: 200, overlay: 30 },
+                midnight: { brightness: 50, contrast: 130, saturation: 60, hue: 220, overlay: 50 },
+                moody: { brightness: 60, contrast: 140, saturation: 50, hue: 180, overlay: 25 },
+                cinema: { brightness: 75, contrast: 115, saturation: 90, hue: 190, overlay: 20 }
+            };
+
+            const p = presets[preset];
+            document.getElementById('brightness').value = p.brightness;
+            document.getElementById('contrast').value = p.contrast;
+            document.getElementById('saturation').value = p.saturation;
+            document.getElementById('hue').value = p.hue;
+            document.getElementById('overlay-opacity').value = p.overlay;
+
+            updateFilters();
+        }
+
+        function downloadImage() {
+            if (!originalImageSrc) {
+                alert('Please upload an image first!');
+                return;
+            }
+
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                // Apply filters using canvas
+                ctx.filter = image.style.filter;
+                ctx.drawImage(img, 0, 0);
+
+                // Apply overlay
+                const overlayOpacity = document.getElementById('overlay-opacity').value / 100;
+                ctx.fillStyle = `rgba(15, 23, 42, ${overlayOpacity})`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Download
+                const link = document.createElement('a');
+                link.download = 'dark-mode-wallpaper.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            };
+
+            img.src = originalImageSrc;
+        }
+
+        // Initialize with default dark mode preset
+        updateFilters();
+    </script>
+</body>
+</html>

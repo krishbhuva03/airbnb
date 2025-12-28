@@ -59,11 +59,22 @@ const ScrollButton = styled.button`
   @media (max-width: 768px) {
     bottom: 20px;
     right: 20px;
-    width: 45px;
-    height: 45px;
+    width: 42px;
+    height: 42px;
     
     svg {
-      font-size: 24px;
+      font-size: 22px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    bottom: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    
+    svg {
+      font-size: 20px;
     }
   }
 `;
