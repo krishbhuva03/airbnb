@@ -106,7 +106,7 @@ const RoomAvatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, ${({ theme }) => theme.primary}, #6366f1);
+  background: ${({ theme }) => theme.primary};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -175,7 +175,7 @@ const IconWrapper = styled.div`
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: linear-gradient(135deg, ${({ theme }) => theme.primary}, #6366f1);
+  background: ${({ theme }) => theme.primary};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,7 +214,7 @@ const StatusDot = styled(OnlineIcon)`
 `;
 
 const AdminBadge = styled.span`
-  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  background: ${({ theme }) => theme.primary};
   padding: 4px 10px;
   border-radius: 12px;
   font-size: 0.75rem;
@@ -271,7 +271,7 @@ const Message = styled.div`
   align-self: ${({ isOwn }) => isOwn ? 'flex-end' : 'flex-start'};
   background: ${({ isOwn, theme }) => 
     isOwn 
-      ? `linear-gradient(135deg, ${theme.primary}, #6366f1)` 
+      ? theme.primary 
       : 'rgba(255, 255, 255, 0.15)'
   };
   
@@ -347,7 +347,7 @@ const SendButton = styled.button`
   height: 50px;
   border: none;
   border-radius: 50%;
-  background: linear-gradient(135deg, ${({ theme }) => theme.primary}, #6366f1);
+  background: ${({ theme }) => theme.primary};
   color: white;
   cursor: pointer;
   display: flex;
