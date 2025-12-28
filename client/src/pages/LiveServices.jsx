@@ -455,7 +455,7 @@ const LiveServices = () => {
       if (!currentUser) return;
       
       try {
-        const token = localStorage.getItem('airbnb-app-token');
+        const token = localStorage.getItem('roamly-app-token');
         if (!token) return;
 
         // Check if user is admin
@@ -529,7 +529,7 @@ const LiveServices = () => {
       // Refresh chat rooms list
       const fetchRooms = async () => {
         try {
-          const token = localStorage.getItem('airbnb-app-token');
+          const token = localStorage.getItem('roamly-app-token');
           const roomsResponse = await getChatRooms(token);
           if (roomsResponse?.data?.chats) {
             setChatRooms(roomsResponse.data.chats);

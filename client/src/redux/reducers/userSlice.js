@@ -13,11 +13,11 @@ export const userSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.currentUser = action.payload.user;
-      localStorage.setItem("airbnb-app-token", action.payload.token);
+      localStorage.setItem("roamly-app-token", action.payload.token);
     },
     logout: (state) => {
       state.currentUser = null;
-      localStorage.removeItem("airbnb-app-token");
+      localStorage.removeItem("roamly-app-token");
     },
   },
 });

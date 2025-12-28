@@ -53,3 +53,43 @@ export const getChatHistory = async (roomId, token) =>
     await API.get(`/chat/history/${roomId}`, {
         headers: { Authorization: `Bearer ${token}` }
     });
+
+// Review APIs
+export const createReview = async (token, data) =>
+    await API.post(`/reviews/create`, data, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const getPropertyReviews = async (propertyId) =>
+    await API.get(`/reviews/property/${propertyId}`);
+
+export const deleteReview = async (token, reviewId) =>
+    await API.delete(`/reviews/${reviewId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+// Admin APIs
+export const getAdminStats = async (token) =>
+    await API.get(`/admin/stats`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const getAdminUsers = async (token) =>
+    await API.get(`/admin/users`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const createProperty = async (token, data) =>
+    await API.post(`/admin/property`, data, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const updateProperty = async (token, id, data) =>
+    await API.put(`/admin/property/${id}`, data, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+
+export const deleteProperty = async (token, id) =>
+    await API.delete(`/admin/property/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });

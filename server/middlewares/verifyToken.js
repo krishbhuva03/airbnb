@@ -15,3 +15,15 @@ export const verifyToken = async (req, res, next) => {
     next(err);
   }
 };
+
+export const verifyAdmin = async (req, res, next) => {
+  try {
+    if (!req.user.isAdmin) {
+      return next(createError(403, "You are not authorized to access this resource!"));
+    }
+    return next();
+  } catch (err) {
+    next(err);
+  }
+};
+

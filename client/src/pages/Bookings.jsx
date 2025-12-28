@@ -153,7 +153,7 @@ const Bookings = () => {
     const fetchBookings = async () => {
       try {
         setLoading(true);
-        const token = localStorage.getItem("airbnb-app-token");
+        const token = localStorage.getItem("roamly-app-token");
         if (!token) {
           navigate("/");
           return;

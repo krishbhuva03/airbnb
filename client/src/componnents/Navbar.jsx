@@ -7,8 +7,11 @@ import {
   FavoriteBorder,
   MenuRounded,
   SearchRounded,
+  DarkMode,
+  LightMode,
 } from "@mui/icons-material";
-import LogoImg from "../utils/Images/Logo.svg";
+import { useThemeMode } from "../utils/ThemeContext";
+import LogoImg from "../utils/Images/Logo.png";
 
 const Nav = styled.div`
   padding: 10px;
@@ -20,8 +23,10 @@ const Nav = styled.div`
   top: 0;
   z-index: 5000;
   color: white;
-  backdrop-filter: blur(10px);
-  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   
   @media (max-width: 480px) {
     padding: 8px;
@@ -59,6 +64,7 @@ const NavLogo = styled.div`
 `;
 const Logo = styled.img`
   height: 40px;
+  display: none;
   
   @media (max-width: 768px) {
     height: 36px;
@@ -67,6 +73,24 @@ const Logo = styled.img`
   @media (max-width: 480px) {
     height: 32px;
   }
+`;
+
+const LogoIcon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.primary};
+  
+  svg {
+    font-size: 28px;
+  }
+`;
+
+const LogoText = styled.span`
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: -0.5px;
 `;
 const NavItems = styled.ul`
   width: 100%;
@@ -83,17 +107,17 @@ const NavItems = styled.ul`
 const Navlink = styled(NavLink)`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.white};
+  color: #FFFFFF;
   font-weight: 500;
   cursor: pointer;
-  transition: all 1s slide-in;
+  transition: all 0.3s ease;
   text-decoration: none;
   &:hover {
     border-bottom: 1.8px solid ${({ theme }) => theme.primary};
   }
   &.active {
-    color: ${({ theme }) => theme.white};
-    border-bottom: 1.8px solid ${({ theme }) => theme.white};
+    color: #FFFFFF;
+    border-bottom: 1.8px solid #FFFFFF;
   }
 `;
 const ButtonContainer = styled.div`
@@ -202,8 +226,33 @@ const Backdrop = styled.div`
   transition: opacity 0.2s ease;
 `;
 
+const ThemeToggle = styled.button`
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  color: white;
+  min-width: 40px;
+  min-height: 40px;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+  
+  svg {
+    font-size: 22px;
+  }
+`;
+
 const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isDarkMode, toggleTheme } = useThemeMode();
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -224,17 +273,20 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
         <MenuRounded style={{color : "white"}}/>
       </MobileIcon>
       <NavLogo>
-        <Logo src={LogoImg} />
+        <LogoIcon>
+          <img src={LogoImg} alt="Logo" style={{ height: "30px" }} />
+        </LogoIcon>
+        <LogoText>Roamly</LogoText>
       </NavLogo>
 
       <Backdrop isOpen={isOpen} onClick={() => setIsOpen(false)} />
       {isOpen && (
         <MobileMenu isOpen={isOpen}>
           <Navlink to="/" onClick={()=> setIsOpen(false)}>Home</Navlink>
-          <Navlink to="/properties" onClick={()=> setIsOpen(false)}>Place to stay</Navlink>
-          <Navlink to="/contact" onClick={()=> setIsOpen(false)}>Contact</Navlink>
+          <Navlink to="/properties" onClick={()=> setIsOpen(false)}>Stays</Navlink>
+          <Navlink to="/discover" onClick={()=> setIsOpen(false)}>Discover</Navlink>
           <Navlink to="/blogs" onClick={()=> setIsOpen(false)}>Blogs</Navlink>
-          <Navlink to="/live-services" onClick={()=> setIsOpen(false)}>Live Services</Navlink>
+          <Navlink to="/live-services" onClick={()=> setIsOpen(false)}>Concierge</Navlink>
           <div 
           style={{
             flex:1,
@@ -258,15 +310,18 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
 
       <NavItems>
         <Navlink to="/">Home</Navlink>
-        <Navlink to="/properties">Place to stay</Navlink>
-        <Navlink to="/contact">Contact</Navlink>
+        <Navlink to="/properties">Stays</Navlink>
+        <Navlink to="/discover">Discover</Navlink>
         <Navlink to="/blogs">Blogs</Navlink>
-        <Navlink to="/live-services">Live Services</Navlink>
+        <Navlink to="/live-services">Concierge</Navlink>
       </NavItems>
 
       
 
       <ButtonContainer>
+        <ThemeToggle onClick={toggleTheme} aria-label="Toggle dark mode">
+          {isDarkMode ? <LightMode /> : <DarkMode />}
+        </ThemeToggle>
         {currentUser ? (
         <>
           <Navlink to="/favourite">

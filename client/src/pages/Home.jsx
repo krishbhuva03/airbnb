@@ -151,10 +151,10 @@ const Title = styled.div`
 const Desc = styled.input`
   width: 100%;
   padding: 8px 0;
-  color: ${({ theme }) => theme.text_primary};
+  color: rgba(0, 0, 0, 0.7);
   font-weight: 400;
-  margin-top: 8px;
-  font-size: 16px;
+  margin-top: 6px;
+  font-size: 15px;
   border: none;
   outline: none;
   background: transparent;
@@ -166,7 +166,7 @@ const Desc = styled.input`
 
   &[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
-    filter: invert(0.6);
+    filter: invert(0.5);
     opacity: 0.6;
     transition: 0.3s;
   }
@@ -176,17 +176,20 @@ const Desc = styled.input`
   }
 
   &::placeholder {
-    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.4);
   }
-  color: rgba(0, 0, 0, 0.7);
-  font-weight: 400;
-  margin-top: 14px;
-  font-size: 16px;
-  border: none;
-  outline: none;
 `;
 
-
+const Divider = styled.div`
+  width: 1px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 1px;
+  }
+`;
 
 const SearchWrapper = styled.div`
   border-radius: 33px;
@@ -258,39 +261,43 @@ const Home = () => {
           <IconWrapper>
             <LocationOnOutlined />
             <Title>Location</Title>
-          <Desc 
-          placeholder="Where are going" 
-          type="text" 
-          value={location}
-          onChange={(e)=> setLocation(e.target.value)}
-          />
           </IconWrapper>
+          <Desc 
+            placeholder="Where are you going?" 
+            type="text" 
+            value={location}
+            onChange={(e)=> setLocation(e.target.value)}
+          />
         </InputWrapper>
+
+        <Divider />
 
         <InputWrapper>
           <IconWrapper>
             <CalendarMonthOutlined />
-            <Title>Check In Date</Title>
-          <Desc 
-          placeholder="Start date" 
-          type="date"
-          value={CheckInDate}
-          onChange={(e)=> setCheckInDate(e.target.value)}
-          />
+            <Title>Check In</Title>
           </IconWrapper>
+          <Desc 
+            placeholder="Add date" 
+            type="date"
+            value={CheckInDate}
+            onChange={(e)=> setCheckInDate(e.target.value)}
+          />
         </InputWrapper>
+
+        <Divider />
 
         <InputWrapper>
           <IconWrapper>
             <CalendarMonthOutlined />
-            <Title>Check Out Date</Title>
-          <Desc 
-          placeholder="End date" 
-          type="date"
-          value={CheckOutDate}
-          onChange={(e)=> setCheckOutDate(e.target.value)}
-          />
+            <Title>Check Out</Title>
           </IconWrapper>
+          <Desc 
+            placeholder="Add date" 
+            type="date"
+            value={CheckOutDate}
+            onChange={(e)=> setCheckOutDate(e.target.value)}
+          />
         </InputWrapper>
 
         <SearchWrapper>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Button from "./Button";
 import { UserSignUp } from "../api";
-import { FaAirbnb, FaGoogle, FaGithub } from 'react-icons/fa';
+import { FaHome, FaGoogle, FaGithub } from 'react-icons/fa';
 
 const slideIn = keyframes`
   from {
@@ -360,8 +360,8 @@ const Signup = ({ setOpenAuth, setLogin }) => {
         <RightSection>
           <FormContainer>
             <Logo>
-              <FaAirbnb />
-              <span>airbnb</span>
+              <FaHome />
+              <span>Roamly</span>
             </Logo>
             <div>
               <Welcome>Create Account</Welcome>

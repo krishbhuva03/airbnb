@@ -4,7 +4,7 @@ import Button from "./Button";
 import { UserSignIn } from "../api";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../redux/reducers/userSlice";
-import { FaAirbnb, FaGoogle, FaGithub } from 'react-icons/fa';
+import { FaHome, FaGoogle, FaGithub } from 'react-icons/fa';
 
 
 const slideIn = keyframes`
@@ -344,8 +344,8 @@ const SignIn = ({ setOpenAuth, setLogin }) => {
       <LeftSection>
         <FormContainer>
           <Logo>
-            <FaAirbnb />
-            <span>airbnb</span>
+            <FaHome />
+            <span>Roamly</span>
           </Logo>
           <div>
             <Welcome>Welcome back</Welcome>
@@ -399,7 +399,7 @@ const SignIn = ({ setOpenAuth, setLogin }) => {
       </LeftSection>
       <RightSection>
         <WelcomeContainer>
-          <h1>Welcome to Airbnb</h1>
+          <h1>Welcome to Roamly</h1>
           <p>Find your perfect stay anywhere in the world with our curated selection of unique accommodations.</p>
         </WelcomeContainer>
       </RightSection>

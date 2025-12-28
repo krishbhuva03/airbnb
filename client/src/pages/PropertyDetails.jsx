@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { getPropertyDetails, bookProperty } from "../api";
 import Button from "../componnents/Button";
+import ReviewSection from "../componnents/ReviewSection";
 
 const Container = styled.div`
   display: flex;
@@ -188,7 +189,7 @@ const PropertyDetails = () => {
   const handleBooking = async () => {
     try {
       setBookingLoading(true);
-      const token = localStorage.getItem("airbnb-app-token");
+      const token = localStorage.getItem("roamly-app-token");
       
       if (!token) {
         setDialogMessage({
@@ -247,7 +248,7 @@ const PropertyDetails = () => {
   useEffect(() => {
     console.log('Auth state:', {
       currentUser,
-      token: localStorage.getItem('airbnb-app-token'),
+      token: localStorage.getItem('roamly-app-token'),
       datesSelected: { startDate, endDate },
       isDisabled: !currentUser || !startDate || !endDate
     });
@@ -313,6 +314,7 @@ const PropertyDetails = () => {
                 isDisabled={!startDate || !endDate}
               />
             </BookingContainer>
+            <ReviewSection propertyId={id} />
           </Right>
         </Container>
       )}

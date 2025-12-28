@@ -26,12 +26,13 @@ const Card = styled.div`
   cursor: pointer;
   border-radius: 16px;
   overflow: hidden;
-  background: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.card_border || 'transparent'};
+  box-shadow: 0 4px 12px ${({ theme }) => theme.shadow};
   
   &:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 8px 24px ${({ theme }) => theme.shadow};
   }
   
   @media (hover: none) and (pointer: coarse) {
@@ -242,7 +243,7 @@ const PropertyCard = ({ property }) => {
     e.stopPropagation(); // Prevent navigation when clicking favorite
     try {
       setFavoriteLoading(true);
-      const token = localStorage.getItem("airbnb-app-token");
+      const token = localStorage.getItem("roamly-app-token");
       
       if (!token) {
         dispatch(openSnackbar({ message: 'Please login to add favorites', severity: 'warning' }));
@@ -284,7 +285,7 @@ const PropertyCard = ({ property }) => {
   const checkFavourite = async () => {
     try {
       setFavoriteLoading(true);
-      const token = localStorage.getItem("airbnb-app-token");
+      const token = localStorage.getItem("roamly-app-token");
       
       if (!token) {
         console.log('No token found in localStorage');
@@ -303,7 +304,7 @@ const PropertyCard = ({ property }) => {
       console.error('Error in checkFavourite:', err.response?.data || err.message);
       if (err.response?.status === 401) {
         // Token might be invalid or expired
-        localStorage.removeItem("airbnb-app-token");
+        localStorage.removeItem("roamly-app-token");
       }
     } finally {
       setFavoriteLoading(false);
@@ -335,8 +336,11 @@ const PropertyCard = ({ property }) => {
       </Menu>
       <Rate>
         <Rating 
-        value={property?.rating}
-        sx={{fontSize:"14px"}}/>
+          value={property?.rating || 0}
+          precision={0.5}
+          readOnly
+          sx={{ fontSize: "14px" }}
+        />
       </Rate>
     </Top>
     <Details onClick={()=> navigate(`/properties/${property?._id}`)}>

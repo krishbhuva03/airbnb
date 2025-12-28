@@ -1,19 +1,21 @@
 export const lightTheme = {
   bg: "#FFFFFF",
-  bgLight: "#FFFFFF",
+  bgLight: "#F8F9FA",
   primary: "#D3004D",
   secondary: "#FFFFFF",
 
   disabled: "#b1b2b3",
-  menubar: "#191c29",
-  navbar: "#242B3F",
+  menubar: "#1A3A3A",
+  navbar: "#1E4D4A",
+  footer: "#1A3F3D",
   arrow: "#AFAFB5",
   menu_primary_text: "#F2F3F4",
   menu_secondary_text: "#b1b2b3",
   table_header: "#242445",
   text_primary: "#404040",
-  text_secondary: "#4d4c4c",
+  text_secondary: "#6b6b6b",
   card: "#FFFFFF",
+  card_border: "transparent",
   black: "#000000",
   white: "#FFFFFF",
   shadow: "#00000020",
@@ -25,4 +27,41 @@ export const lightTheme = {
   popup_text_primary: "#F2F3F4",
   popup_text_secondary: "#b1b2b3",
   output_node: "#49516b",
+  
+  bgPattern: "none",
 };
+
+export const darkTheme = {
+  bg: "#121218",
+  bgLight: "#1A1A22",
+  primary: "#FF6B9D",
+  secondary: "#1E1E26",
+
+  disabled: "#666666",
+  menubar: "#1A1A1A",
+  navbar: "#2A2A2A",
+  footer: "#1F1F1F",
+  arrow: "#999999",
+  menu_primary_text: "#FFFFFF",
+  menu_secondary_text: "#CCCCCC",
+  table_header: "#1F1F2E",
+  text_primary: "#F5F5F5",
+  text_secondary: "#A0A0A8",
+  card: "#1E1E28",
+  card_border: "#2A2A35",
+  black: "#FFFFFF",
+  white: "#121218",
+  shadow: "#00000099",
+  green: "#4ADE80",
+  yellow: "#FBBF24",
+  red: "#F87171",
+  orange: "#FB923C",
+  popup: "#1A1A24",
+  popup_text_primary: "#FFFFFF",
+  popup_text_secondary: "#CCCCCC",
+  output_node: "#2A2A4A",
+  
+  // Background pattern for dark mode
+  bgPattern: "linear-gradient(135deg, #121218 0%, #0D0D12 50%, #151520 100%)",
+};
+
