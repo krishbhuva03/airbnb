@@ -120,33 +120,43 @@ const SortDropdown = styled.div`
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
-  background: ${({ theme }) => theme.card || '#1E1E28'};
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(30, 30, 40, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
   padding: 8px 0;
   min-width: 180px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   z-index: 100;
   opacity: ${({ isOpen }) => isOpen ? 1 : 0};
   visibility: ${({ isOpen }) => isOpen ? 'visible' : 'hidden'};
   transform: translateY(${({ isOpen }) => isOpen ? '0' : '-10px'});
   transition: all 0.2s ease;
+  
+  @media (max-width: 480px) {
+    min-width: 160px;
+    right: 0;
+  }
 `;
 
 const SortOption = styled.button`
   width: 100%;
   padding: 12px 16px;
-  background: ${({ active, theme }) => active ? (theme.primary + '20') : 'transparent'};
+  background: ${({ active, theme }) => active ? (theme.primary + '30') : 'transparent'};
   border: none;
-  color: ${({ active }) => active ? '#FFFFFF' : 'rgba(255, 255, 255, 0.8)'};
+  border-left: 3px solid ${({ active, theme }) => active ? theme.primary : 'transparent'};
+  color: ${({ active }) => active ? '#FFFFFF' : 'rgba(255, 255, 255, 0.85)'};
   font-size: 14px;
+  font-weight: ${({ active }) => active ? '500' : '400'};
   text-align: left;
   cursor: pointer;
   transition: all 0.2s ease;
   
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
     color: #FFFFFF;
+    border-left-color: ${({ theme }) => theme.primary};
   }
 `;
 

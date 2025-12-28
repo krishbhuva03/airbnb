@@ -252,6 +252,14 @@ const ThemeToggle = styled.button`
   }
 `;
 
+const MobileThemeToggle = styled(ThemeToggle)`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: flex;
+  }
+`;
+
 const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useThemeMode();
@@ -280,6 +288,10 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
         </LogoIcon>
         <LogoText>Roamly</LogoText>
       </NavLogo>
+      
+      <MobileThemeToggle onClick={toggleTheme} aria-label="Toggle dark mode">
+        {isDarkMode ? <LightMode /> : <DarkMode />}
+      </MobileThemeToggle>
 
       <Backdrop isOpen={isOpen} onClick={() => setIsOpen(false)} />
       {isOpen && (

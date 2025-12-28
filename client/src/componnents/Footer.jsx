@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Facebook, Twitter, Instagram, LinkedIn } from "@mui/icons-material";
 import LogoImg from "../utils/Images/Logo.png";
 
@@ -12,6 +12,13 @@ const FooterContainer = styled.footer`
   padding: 24px;
   margin-top: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  
+  /* Hide footer on mobile for Live Services (Concierge) page */
+  @media (max-width: 768px) {
+    ${({ $hideOnMobile }) => $hideOnMobile && `
+      display: none;
+    `}
+  }
 `;
 
 const FooterContent = styled.div`
@@ -118,8 +125,11 @@ const SocialIcon = styled.a`
 `;
 
 const Footer = () => {
+  const location = useLocation();
+  const isLiveServicesPage = location.pathname === '/live-services';
+  
   return (
-    <FooterContainer>
+    <FooterContainer $hideOnMobile={isLiveServicesPage}>
       <FooterContent>
         <LogoSection>
           <LogoIcon>
