@@ -19,6 +19,10 @@ const UserSchema = new mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        activeSessionToken: {
+            type: String,
+            default: null,
+        },
         favourites: {
             type: [mongoose.Schema.Types.ObjectId],
             ref: "Property",
@@ -46,4 +50,4 @@ const UserSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.models.User || mongoose.model("User", UserSchema);

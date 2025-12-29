@@ -4,10 +4,11 @@ import { ThemeModeProvider, useThemeMode } from "./utils/ThemeContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./componnents/Navbar";
 import { Analytics } from "@vercel/analytics/react"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "./pages/Home";
 import Authentication from "./pages/Authentication";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "./redux/reducers/userSlice";
 import PropertyDetails from "./pages/PropertyDetails";
 import PropertyListing from "./pages/PropertyListing";
 import Bookings from "./pages/Bookings";
@@ -62,8 +63,21 @@ const MainContent = styled.main`
 
 function AppContent() {
   const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const { isDarkMode } = useThemeMode();
   const [openAuth, setOpenAuth] = useState(false);
+  
+  // Listen for session expiry from other devices
+  useEffect(() => {
+    const handleSessionExpired = () => {
+      dispatch(logout());
+      setOpenAuth(true);
+      alert('Session expired. You have logged in from another device.');
+    };
+    
+    window.addEventListener('session-expired', handleSessionExpired);
+    return () => window.removeEventListener('session-expired', handleSessionExpired);
+  }, [dispatch]);
   
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
