@@ -8,7 +8,9 @@ import {
   Circle as OnlineIcon,
   ChatBubbleOutline as ChatIcon,
   Person as PersonIcon,
-  Notifications as NotificationIcon
+  Notifications as NotificationIcon,
+  ExpandMore as ExpandMoreIcon,
+  ExpandLess as ExpandLessIcon
 } from '@mui/icons-material';
 import { socket, connectSocket, joinRoom, sendMessage, sendTypingStatus } from '../utils/socket';
 import { getChatRooms, checkAdminStatus } from '../api';
@@ -37,18 +39,24 @@ const PageContainer = styled.div`
 
 // Sidebar for Admin
 const Sidebar = styled.div`
-  width: 300px;
-  background: rgba(255, 255, 255, 0.1);
+  width: 280px;
+  min-width: 280px;
+  background: rgba(30, 35, 50, 0.85);
   border-radius: 16px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   
   @media (max-width: 768px) {
     width: 100%;
-    max-height: ${({ isExpanded }) => isExpanded ? '300px' : '60px'};
+    min-width: unset;
+    max-height: ${({ isExpanded }) => isExpanded ? '50vh' : '56px'};
     transition: max-height 0.3s ease;
+    position: relative;
+    z-index: 10;
   }
 `;
 
@@ -56,25 +64,58 @@ const SidebarHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.2);
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
   cursor: pointer;
+  min-height: 60px;
+  box-sizing: border-box;
   
   h3 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    letter-spacing: 0.3px;
+    
+    svg {
+      color: ${({ theme }) => theme.primary};
+    }
+  }
+  
+  @media (max-width: 768px) {
+    &:active {
+      background: rgba(0, 0, 0, 0.35);
+    }
+  }
+`;
+
+const ExpandIcon = styled.div`
+  display: none;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  
+  @media (max-width: 768px) {
+    display: flex;
+  }
+  
+  svg {
+    font-size: 24px;
+    transition: transform 0.3s ease;
   }
 `;
 
 const RoomCount = styled.span`
   background: ${({ theme }) => theme.primary};
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 12px;
   font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
 `;
 
 const RoomsList = styled.div`
@@ -93,13 +134,36 @@ const RoomsList = styled.div`
 
 const RoomItem = styled.div`
   padding: 14px 20px;
+  padding-left: 16px;
   cursor: pointer;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  background: ${({ isActive }) => isActive ? 'rgba(255, 255, 255, 0.15)' : 'transparent'};
-  transition: background 0.2s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  background: ${({ isActive }) => isActive ? 'rgba(255, 255, 255, 0.08)' : 'transparent'};
+  transition: all 0.2s ease;
+  position: relative;
+  
+  /* Active indicator bar on the left */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: ${({ isActive, theme }) => isActive ? theme.primary : 'transparent'};
+    border-radius: 0 4px 4px 0;
+    transition: background 0.2s ease;
+  }
   
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.06);
+    
+    &::before {
+      background: ${({ theme }) => theme.primary}80;
+    }
+  }
+  
+  &:last-child {
+    border-bottom: none;
   }
 `;
 
@@ -110,13 +174,20 @@ const RoomInfo = styled.div`
 `;
 
 const RoomAvatar = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.primary}25;
+  border: 2px solid ${({ theme }) => theme.primary};
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  
+  svg {
+    font-size: 22px;
+    color: ${({ theme }) => theme.primary};
+  }
 `;
 
 const RoomDetails = styled.div`
@@ -125,18 +196,22 @@ const RoomDetails = styled.div`
 `;
 
 const RoomName = styled.div`
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.95rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgba(255, 255, 255, 0.95);
+  margin-bottom: 2px;
 `;
 
 const RoomPreview = styled.div`
   font-size: 0.8rem;
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.5);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 400;
 `;
 
 const UnreadBadge = styled.div`
@@ -590,6 +665,11 @@ const LiveServices = () => {
       updated.delete(selectedRoomId);
       return updated;
     });
+    
+    // Collapse sidebar on mobile after selecting a room
+    if (window.innerWidth <= 768) {
+      setSidebarExpanded(false);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -670,7 +750,12 @@ const LiveServices = () => {
               <NotificationIcon style={{ fontSize: '20px' }} />
               Support Chats
             </h3>
-            <RoomCount>{chatRooms.length}</RoomCount>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <RoomCount>{chatRooms.length}</RoomCount>
+              <ExpandIcon>
+                {sidebarExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ExpandIcon>
+            </div>
           </SidebarHeader>
           <RoomsList>
             {chatRooms.length === 0 ? (

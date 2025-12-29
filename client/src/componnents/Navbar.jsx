@@ -300,7 +300,7 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
           <Navlink to="/properties" onClick={()=> setIsOpen(false)}>Properties</Navlink>
           <Navlink to="/discover" onClick={()=> setIsOpen(false)}>Discover</Navlink>
           <Navlink to="/blogs" onClick={()=> setIsOpen(false)}>Blogs</Navlink>
-          <Navlink to="/live-services" onClick={()=> setIsOpen(false)}>Concierge</Navlink>
+          <Navlink to="/concierge" onClick={()=> setIsOpen(false)}>Concierge</Navlink>
           <div 
           style={{
             width: "100%",
@@ -332,7 +332,7 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
         <Navlink to="/properties">Properties</Navlink>
         <Navlink to="/discover">Discover</Navlink>
         <Navlink to="/blogs">Blogs</Navlink>
-        <Navlink to="/live-services">Concierge</Navlink>
+        <Navlink to="/concierge">Concierge</Navlink>
       </NavItems>
 
       

@@ -104,13 +104,13 @@ const Question = styled.h2`
 `;
 
 const OptionsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
   width: 100%;
   
   @media (max-width: 480px) {
-    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 `;
@@ -129,6 +129,8 @@ const OptionCard = styled.div`
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  width: 150px;
+  min-width: 150px;
   
   &:hover {
     transform: translateY(-4px);
@@ -143,6 +145,8 @@ const OptionCard = styled.div`
   }
   
   @media (max-width: 480px) {
+    width: calc(50% - 6px);
+    min-width: unset;
     padding: 20px 12px;
     
     svg {

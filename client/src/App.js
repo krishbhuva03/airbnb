@@ -84,7 +84,7 @@ function AppContent() {
               <Route path="/blogs" exact element={<Blogs />} />
               <Route path="/blogs/:id" element={<BlogDetails />} />
               <Route path="/favourite" element={<Favorites />} />
-              <Route path="/live-services" element={<LiveServices />} />
+              <Route path="/concierge" element={<LiveServices />} />
               <Route path="/admin" element={<AdminDashboard />} />
             </Routes>
           </MainContent>
