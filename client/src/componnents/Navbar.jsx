@@ -264,7 +264,7 @@ const MobileThemeToggle = styled(ThemeToggle)`
   }
 `;
 
-const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
+const Navbar = ({setOpenAuth, openAuth, currentUser, setInitialLogin}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useThemeMode();
   const dispatch = useDispatch();
@@ -331,9 +331,6 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
                 <FavoriteBorder sx={{ fontSize: "22px" }} />
                 Favorites
               </Navlink>
-              <Navlink to="/bookings" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                Bookings
-              </Navlink>
               <div 
                 onClick={handleLogout}
                 style={{ 
@@ -365,13 +362,13 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
               text="Sign Up" 
               small
               flex
-              onClick={() => { setIsOpen(false); setOpenAuth(true); }}
+              onClick={() => { setIsOpen(false); setInitialLogin(false); setOpenAuth(true); }}
               />
               <Button 
               text="Sign In" 
               small
               flex
-              onClick={()=> { setIsOpen(false); setOpenAuth(true); }}
+              onClick={()=> { setIsOpen(false); setInitialLogin(true); setOpenAuth(true); }}
               />
             </div>
           )}
@@ -404,7 +401,7 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
           type="secondary"
           text="SignIn"
           small
-          onClick={() => setOpenAuth(!openAuth)}
+          onClick={() => { setInitialLogin(true); setOpenAuth(!openAuth); }}
           />
         )}
       </ButtonContainer>

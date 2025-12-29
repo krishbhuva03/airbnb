@@ -66,6 +66,7 @@ function AppContent() {
   const dispatch = useDispatch();
   const { isDarkMode } = useThemeMode();
   const [openAuth, setOpenAuth] = useState(false);
+  const [initialLogin, setInitialLogin] = useState(true);
   
   // Listen for session expiry from other devices
   useEffect(() => {
@@ -86,6 +87,7 @@ function AppContent() {
             setOpenAuth={setOpenAuth}
             openAuth={openAuth}
             currentUser={currentUser}
+            setInitialLogin={setInitialLogin}
           />
           <MainContent>
             <Routes>
@@ -103,7 +105,7 @@ function AppContent() {
           </MainContent>
 
           {openAuth && (
-            <Authentication setOpenAuth={setOpenAuth} openAuth={openAuth} />
+            <Authentication setOpenAuth={setOpenAuth} openAuth={openAuth} initialLogin={initialLogin} />
           )}
 
           <Footer />

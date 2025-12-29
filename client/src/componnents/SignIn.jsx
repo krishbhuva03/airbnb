@@ -20,32 +20,16 @@ const slideIn = keyframes`
 
 const PageWrapper = styled.div`
   width: 100%;
-  height: 100vh;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 10px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-    &:hover {
-      background: #555;
-    }
+  height: 100%;
+  background: #fff;
+  
+  @media (max-width: 768px) {
+    background: linear-gradient(180deg, #FF385C 0%, #FF385C 120px, #fff 120px, #fff 100%);
   }
 `;
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100vh;
   display: flex;
   position: relative;
 
@@ -59,32 +43,13 @@ const LeftSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  background: #fff;
+  padding: 30px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   animation: ${slideIn} 0.6s ease-out;
-  min-height: 100vh;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #ddd;
-    border-radius: 10px;
-    &:hover {
-      background: #ccc;
-    }
-  }
 
   @media (max-width: 768px) {
-    padding: 20px;
-    min-height: auto;
-    max-height: none;
+    padding: 30px 24px;
+    background: transparent;
   }
 `;
 
@@ -94,31 +59,12 @@ const RightSection = styled.div`
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #FF385C 0%, #E31C5F 100%);
-  padding: 40px;
+  padding: 30px;
   position: relative;
-  min-height: 100vh;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 10px;
-    &:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-  }
 
   @media (max-width: 768px) {
-    padding: 40px 20px;
-    min-height: 300px;
-    max-height: none;
+    padding: 30px 20px;
+    display: none;
   }
 `;
 
@@ -127,9 +73,17 @@ const FormContainer = styled.div`
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   color: #000000;
   animation: ${slideIn} 0.6s ease-out;
+  background: #fff;
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    padding: 28px 24px;
+  }
 `;
 
 const WelcomeContainer = styled.div`
