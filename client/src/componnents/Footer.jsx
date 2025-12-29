@@ -126,7 +126,7 @@ const SocialIcon = styled.a`
 
 const Footer = () => {
   const location = useLocation();
-  const isLiveServicesPage = location.pathname === '/live-services';
+  const isLiveServicesPage = location.pathname === '/concierge';
   
   return (
     <FooterContainer $hideOnMobile={isLiveServicesPage}>
@@ -143,6 +143,7 @@ const Footer = () => {
           <FooterLink to="/properties">Properties</FooterLink>
           <FooterLink to="/discover">Discover</FooterLink>
           <FooterLink to="/blogs">Blogs</FooterLink>
+          <FooterLink to="/concierge">Concierge</FooterLink>
         </QuickLinks>
 
         <RightSection>

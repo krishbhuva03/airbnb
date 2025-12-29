@@ -323,8 +323,7 @@ const SignIn = ({ setOpenAuth, setLogin }) => {
         dispatch(loginSuccess(response.data));
         console.log('Action dispatched, closing modal...');
         setOpenAuth(false);
-        // Show success message
-        alert('Welcome back, ' + response.data.name + '!');
+        // User is now logged in and will be redirected to home - no popup needed
       } else {
         console.log('No token in response');
         alert('Login failed: Invalid credentials');

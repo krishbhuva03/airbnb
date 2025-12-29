@@ -71,8 +71,7 @@ function AppContent() {
   useEffect(() => {
     const handleSessionExpired = () => {
       dispatch(logout());
-      setOpenAuth(true);
-      alert('Session expired. You have logged in from another device.');
+      // Silently logout and redirect to home - no popup needed
     };
     
     window.addEventListener('session-expired', handleSessionExpired);
