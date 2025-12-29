@@ -33,10 +33,20 @@ const ProfileDropdown = styled.div`
   margin-top: 8px;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
   padding: 16px;
   min-width: 200px;
-  z-index: 1000;
+  z-index: 9999;
+  
+  @media (max-width: 768px) {
+    position: fixed;
+    top: auto;
+    bottom: 80px;
+    right: 16px;
+    left: 16px;
+    min-width: unset;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  }
 `;
 
 const ProfileInfo = styled.div`

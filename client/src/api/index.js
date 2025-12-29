@@ -5,6 +5,19 @@ const API = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:8080/api/",
 })
 
+// Interceptor to handle session expiry (single device login)
+API.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Clear token and dispatch session expired event
+            localStorage.removeItem('roamly-app-token');
+            window.dispatchEvent(new CustomEvent('session-expired'));
+        }
+        return Promise.reject(error);
+    }
+);
+
 export const UserSignUp = async (data) => await API.post("user/signup", data)
 
 export const UserSignIn = async (data) => await API.post("user/signin", data)

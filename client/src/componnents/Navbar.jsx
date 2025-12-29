@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/reducers/userSlice";
 import Button from "./Button";
 import UserProfile from "./UserProfile";
 import {
@@ -9,6 +11,8 @@ import {
   SearchRounded,
   DarkMode,
   LightMode,
+  Logout,
+  Person,
 } from "@mui/icons-material";
 import { useThemeMode } from "../utils/ThemeContext";
 import LogoImg from "../utils/Images/Logo.png";
@@ -260,9 +264,15 @@ const MobileThemeToggle = styled(ThemeToggle)`
   }
 `;
 
-const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
+const Navbar = ({setOpenAuth, openAuth, currentUser, setInitialLogin}) => {
   const [isOpen, setIsOpen] = useState(false);
   const { isDarkMode, toggleTheme } = useThemeMode();
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsOpen(false);
+  };
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -301,29 +311,67 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
           <Navlink to="/discover" onClick={()=> setIsOpen(false)}>Discover</Navlink>
           <Navlink to="/blogs" onClick={()=> setIsOpen(false)}>Blogs</Navlink>
           <Navlink to="/concierge" onClick={()=> setIsOpen(false)}>Concierge</Navlink>
-          <div 
-          style={{
-            width: "100%",
-            display: "flex",
-            gap: "12px",
-            marginTop: "8px",
-            paddingTop: "16px",
-            borderTop: "1px solid rgba(255,255,255,0.15)",
-          }}>
-            <Button 
-            outlined
-            text="Sign Up" 
-            small
-            flex
-            onClick={() => { setIsOpen(false); setOpenAuth(true); }}
-            />
-            <Button 
-            text="Sign In" 
-            small
-            flex
-            onClick={()=> { setIsOpen(false); setOpenAuth(true); }}
-            />
-          </div>
+          
+          {currentUser ? (
+            <div 
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              gap: "12px",
+              marginTop: "8px",
+              paddingTop: "16px",
+              borderTop: "1px solid rgba(255,255,255,0.15)",
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'white', fontSize: '1rem' }}>
+                <Person sx={{ fontSize: "22px" }} />
+                <span style={{ fontWeight: 500 }}>{currentUser.name}</span>
+              </div>
+              <Navlink to="/favourite" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <FavoriteBorder sx={{ fontSize: "22px" }} />
+                Favorites
+              </Navlink>
+              <div 
+                onClick={handleLogout}
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '10px', 
+                  color: '#FF385C', 
+                  cursor: 'pointer',
+                  padding: '8px 0',
+                  fontWeight: 500
+                }}
+              >
+                <Logout sx={{ fontSize: "22px" }} />
+                Sign Out
+              </div>
+            </div>
+          ) : (
+            <div 
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "12px",
+              marginTop: "8px",
+              paddingTop: "16px",
+              borderTop: "1px solid rgba(255,255,255,0.15)",
+            }}>
+              <Button 
+              outlined
+              text="Sign Up" 
+              small
+              flex
+              onClick={() => { setIsOpen(false); setInitialLogin(false); setOpenAuth(true); }}
+              />
+              <Button 
+              text="Sign In" 
+              small
+              flex
+              onClick={()=> { setIsOpen(false); setInitialLogin(true); setOpenAuth(true); }}
+              />
+            </div>
+          )}
 
         </MobileMenu>)}
 
@@ -353,7 +401,7 @@ const Navbar = ({setOpenAuth, openAuth, currentUser}) => {
           type="secondary"
           text="SignIn"
           small
-          onClick={() => setOpenAuth(!openAuth)}
+          onClick={() => { setInitialLogin(true); setOpenAuth(!openAuth); }}
           />
         )}
       </ButtonContainer>

@@ -33,6 +33,10 @@ export const SignUp = async (req, res, next)=> {
         const token = jwt.sign({ id: createdUser._id }, process.env.JWT,{
             expiresIn: "9999 years",
         })
+        
+        // Save active session token to database for single device login
+        await User.findByIdAndUpdate(createdUser._id, { activeSessionToken: token });
+        
         return res.status(201).json({ token, user });
 
     }catch(err){
@@ -61,6 +65,10 @@ export const SignIn = async (req, res, next)=> {
         }
 
         const token = jwt.sign({ id: user._id}, process.env.JWT, { expiresIn: "9999years"});
+        
+        // Save active session token to database for single device login
+        await User.findByIdAndUpdate(user._id, { activeSessionToken: token });
+        
         return res.status(200).json({ token, user })
     }catch(err){
         next(err)
