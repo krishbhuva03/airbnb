@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components";
-import Button from "./Button";
 import { UserSignUp } from "../api";
-import { FaHome, FaGoogle, FaGithub } from 'react-icons/fa';
+import { MdEmail, MdLock, MdPerson } from 'react-icons/md';
 
-const slideIn = keyframes`
+const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -15,24 +14,14 @@ const slideIn = keyframes`
   }
 `;
 
-const PageWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  
-  @media (max-width: 768px) {
-    background: linear-gradient(180deg, #FF385C 0%, #FF385C 120px, #fff 120px, #fff 100%);
-  }
-`;
-
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: row-reverse;
-  position: relative;
+  min-height: 550px;
 
   @media (max-width: 768px) {
     flex-direction: column-reverse;
+    min-height: auto;
   }
 `;
 
@@ -41,180 +30,257 @@ const LeftSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #FF385C 0%, #E31C5F 100%);
-  padding: 30px;
+  padding: 40px;
+  background: white;
+  animation: ${fadeIn} 0.6s ease-out;
   position: relative;
+  transition: background 0.3s ease;
+
+  @media (prefers-color-scheme: dark) {
+    background: #1a1a1a;
+  }
 
   @media (max-width: 768px) {
-    display: none;
+    padding: 32px 24px;
   }
 `;
 
 const RightSection = styled.div`
   flex: 1;
+  position: relative;
+  overflow: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  animation: ${slideIn} 0.6s ease-out;
+  flex-direction: column;
+  justify-content: flex-end;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=800&q=80') center/cover;
+    z-index: 0;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(255, 56, 92, 0.4) 0%, rgba(255, 56, 92, 0.15) 50%, rgba(0,0,0,0.1) 100%);
+    z-index: 1;
+  }
 
   @media (max-width: 768px) {
-    padding: 30px 24px;
-    background: transparent;
+    min-height: 160px;
+  }
+`;
+
+const RightContent = styled.div`
+  position: relative;
+  z-index: 2;
+  padding: 40px;
+  color: white;
+  animation: ${fadeIn} 0.6s ease-out;
+
+  @media (max-width: 768px) {
+    padding: 24px;
+  }
+`;
+
+const BrandTitle = styled.h2`
+  font-family: 'Brush Script MT', cursive, 'Dancing Script', serif;
+  font-size: 42px;
+  font-weight: 400;
+  margin-bottom: 12px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+
+  @media (max-width: 768px) {
+    font-size: 32px;
+  }
+`;
+
+const BrandTagline = styled.p`
+  font-size: 14px;
+  opacity: 0.95;
+  line-height: 1.5;
+  max-width: 280px;
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    max-width: 100%;
   }
 `;
 
 const FormContainer = styled.div`
   width: 100%;
-  max-width: 400px;
+  max-width: 320px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  color: #000000;
-  animation: ${slideIn} 0.6s ease-out;
-  background: #fff;
-  padding: 32px;
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  
-  @media (max-width: 768px) {
-    padding: 28px 24px;
-  }
+  animation: ${fadeIn} 0.6s ease-out 0.2s both;
 `;
 
-const WelcomeContainer = styled.div`
+const WelcomeTitle = styled.h1`
+  font-size: 32px;
+  font-weight: 700;
+  color: #FF385C;
+  margin-bottom: 8px;
   text-align: center;
-  color: white;
-  animation: ${slideIn} 0.6s ease-out;
-  z-index: 1;
-
-  h1 {
-    font-size: 48px;
-    font-weight: 800;
-    margin-bottom: 20px;
-  }
-
-  p {
-    font-size: 18px;
-    opacity: 0.9;
-    line-height: 1.6;
-    max-width: 500px;
-  }
 
   @media (max-width: 768px) {
-    h1 {
-      font-size: 36px;
-    }
-    p {
-      font-size: 16px;
-    }
+    font-size: 28px;
   }
 `;
 
-const Logo = styled.div`
+const Subtitle = styled.p`
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+  text-align: center;
+
+  @media (prefers-color-scheme: dark) {
+    color: #aaa;
+  }
+`;
+
+const InputWrapper = styled.div`
+  margin-bottom: 14px;
+  position: relative;
+`;
+
+const InputLabel = styled.label`
+  display: block;
+  font-size: 12px;
+  color: #FF385C;
+  margin-bottom: 4px;
+  font-weight: 500;
+`;
+
+const InputField = styled.div`
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 40px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: #fafafa;
+  transition: all 0.3s ease;
+
+  @media (prefers-color-scheme: dark) {
+    background: #2a2a2a;
+    border-color: #444;
+  }
+
+  &:focus-within {
+    border-color: #FF385C;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(255, 56, 92, 0.1);
+
+    @media (prefers-color-scheme: dark) {
+      background: #333;
+    }
+  }
 
   svg {
-    font-size: 32px;
-    color: #FF385C;
+    color: #999;
+    font-size: 18px;
+    margin-right: 12px;
+
+    @media (prefers-color-scheme: dark) {
+      color: #888;
+    }
+  }
+`;
+
+const Input = styled.input`
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  color: #333;
+  outline: none;
+
+  @media (prefers-color-scheme: dark) {
+    color: #eee;
+  }
+
+  &::placeholder {
+    color: #aaa;
+
+    @media (prefers-color-scheme: dark) {
+      color: #666;
+    }
+  }
+`;
+
+const RegisterButton = styled.button`
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #FF385C 0%, #E31C5F 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+
+  &:hover {
+    background: linear-gradient(135deg, #E31C5F 0%, #C71850 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 56, 92, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+
+    @media (prefers-color-scheme: dark) {
+      background: #444;
+    }
+  }
+`;
+
+
+
+const LoginText = styled.p`
+  text-align: center;
+  font-size: 13px;
+  color: #666;
+
+  @media (prefers-color-scheme: dark) {
+    color: #aaa;
   }
 
   span {
-    font-size: 24px;
-    font-weight: 800;
-    color: #222;
-  }
-`;
+    color: #FF385C;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 4px;
 
-const SocialButtons = styled.div`
-  display: flex;
-  gap: 16px;
-  margin-top: 20px;
-`;
-
-const SocialButton = styled.button`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  color: #222;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: #f8f9fa;
-    border-color: #ccc;
-  }
-
-  svg {
-    font-size: 18px;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
 const Error = styled.div`
-  color: #FF385C;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  color: #333;
-  &:focus {
-    outline: none;
-    border-color: #FF385C;
-  }
-  &::placeholder {
-    color: #999;
-  }
-`;
-
-const Welcome = styled.h2`
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  color: #333;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin-bottom: 8px;
-  color: #333;
-  font-weight: 500;
-  font-size: 14px;
-`;
-
-const Text = styled.p`
-  display: flex;
-  gap: 12px;
-  font-size: 14px;
-  text-align: center;
-  color: #666;
-  margin: 20px 0;
-  align-items: center;
-  justify-content: center;
-`;
-
-const TextButton = styled.span`
-  color: #FF385C;
-  cursor: pointer;
-  font-weight: 500;
-  &:hover {
-    text-decoration: underline;
-  }
+  color: #ef4444;
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 4px;
 `;
 
 const Signup = ({ setOpenAuth, setLogin }) => {
@@ -228,43 +294,32 @@ const Signup = ({ setOpenAuth, setLogin }) => {
   const [passwordError, setPasswordError] = useState("")
 
   const handleSignup = async (e) => {
-    console.log('Signup button clicked');
     e.preventDefault();
-    console.log('Form submission prevented');
 
     setEmailError("");
     setPasswordError("");
     setNameError("");
-    console.log('Cleared previous errors');
-
-    console.log('Current values:', { name, email, password });
 
     // Validation
     if (!name) {
-      console.log('Name validation failed');
       setNameError("Name is required");
       return;
     }
     if (!email) {
-      console.log('Email validation failed');
       setEmailError("Email is required");
       return;
     }
     if (!password) {
-      console.log('Password validation failed');
       setPasswordError("Password is required");
       return;
     }
 
     try {
-      console.log('Setting button states...');
       setButtonDisable(true);
       setButtonLoading(true);
-      console.log('Button states set');
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        console.log('Email format validation failed');
         setEmailError("Please enter a valid email address");
         setButtonDisable(false);
         setButtonLoading(false);
@@ -272,110 +327,100 @@ const Signup = ({ setOpenAuth, setLogin }) => {
       }
 
       if (password.length < 6) {
-        console.log('Password length validation failed');
-        setPasswordError("Password must be at least 6 characters long");
+        setPasswordError("Password must be at least 6 characters");
         setButtonDisable(false);
         setButtonLoading(false);
         return;
       }
 
-      console.log('Calling UserSignUp API...');
       const response = await UserSignUp({ name, email, password });
-      console.log('API response:', response);
 
       if (response?.status === 201 && response?.data?.token) {
-        console.log('Signup successful, redirecting to login...');
         alert('Account created successfully! Please login.');
         setLogin(true);
       } else {
-        console.log('Error in response');
         alert('Signup failed: Please try again');
       }
     } catch (err) {
       console.error('Signup error:', err.response?.data || err.message);
       alert(err.response?.data?.message || 'Signup failed. Please try again.');
     } finally {
-
       setButtonDisable(false);
       setButtonLoading(false);
     }
   }
 
   return (
-    <PageWrapper>
-      <Wrapper>
-        <LeftSection>
-          <WelcomeContainer>
-            <h1>Become a Host</h1>
-            <p>Join our community of hosts and share your unique space with travelers from around the world. Start earning and creating unforgettable experiences.</p>
-          </WelcomeContainer>
-        </LeftSection>
-        <RightSection>
-          <FormContainer>
-            <Logo>
-              <FaHome />
-              <span>Roamly</span>
-            </Logo>
-            <div>
-              <Welcome>Create Account</Welcome>
-              <form onSubmit={handleSignup}>
-                <div style={{ marginBottom: "20px" }}>
-                  <Label>Name</Label>
-                  <Input
-                    type="text"
-                    placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  {nameError && <Error>{nameError}</Error>}
-                </div>
-                <div style={{ marginBottom: "20px" }}>
-                  <Label>Email</Label>
-                  <Input
-                    type="email"
-                    placeholder="Enter your email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  {emailError && <Error>{emailError}</Error>}
-                </div>
-                <div style={{ marginBottom: "20px" }}>
-                  <Label>Password</Label>
-                  <Input
-                    type="password"
-                    placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  {passwordError && <Error>{passwordError}</Error>}
-                </div>
-                <Button 
-                  text="Sign Up" 
-                  isLoading={buttonLoading}
-                  isDisabled={buttonDisable}
-                  type="submit"
-                  onClick={handleSignup}
-                  full
+    <Wrapper>
+      <LeftSection>
+        <FormContainer>
+          <WelcomeTitle>Join Us</WelcomeTitle>
+          <Subtitle>Create your account</Subtitle>
+          
+          <form onSubmit={handleSignup}>
+            <InputWrapper>
+              <InputLabel>Full Name</InputLabel>
+              <InputField>
+                <MdPerson />
+                <Input
+                  type="text"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
-                <Text>
-                  Already have an account?{" "}
-                  <TextButton onClick={() => setLogin(true)}>Sign In</TextButton>
-                </Text>
-                <div style={{ textAlign: "center", color: "#666", margin: "10px 0" }}>or continue with</div>
-                <SocialButtons>
-                  <SocialButton>
-                    <FaGoogle /> Google
-                  </SocialButton>
-                  <SocialButton>
-                    <FaGithub /> Github
-                  </SocialButton>
-                </SocialButtons>
-              </form>
-            </div>
-          </FormContainer>
-        </RightSection>
-      </Wrapper>
-    </PageWrapper>
+              </InputField>
+              {nameError && <Error>{nameError}</Error>}
+            </InputWrapper>
+
+            <InputWrapper>
+              <InputLabel>Email</InputLabel>
+              <InputField>
+                <MdEmail />
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </InputField>
+              {emailError && <Error>{emailError}</Error>}
+            </InputWrapper>
+
+            <InputWrapper>
+              <InputLabel>Password</InputLabel>
+              <InputField>
+                <MdLock />
+                <Input
+                  type="password"
+                  placeholder="••••••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </InputField>
+              {passwordError && <Error>{passwordError}</Error>}
+            </InputWrapper>
+            
+            <RegisterButton type="submit" disabled={buttonDisable}>
+              {buttonLoading ? 'Creating account...' : 'REGISTER'}
+            </RegisterButton>
+          </form>
+
+          <LoginText style={{ marginTop: '24px' }}>
+            Already have an account?
+            <span onClick={() => setLogin(true)}>Sign In</span>
+          </LoginText>
+        </FormContainer>
+      </LeftSection>
+      
+      <RightSection>
+        <RightContent>
+          <BrandTitle>Roamly</BrandTitle>
+          <BrandTagline>
+            Begin your adventure and explore breathtaking destinations across the globe
+          </BrandTagline>
+        </RightContent>
+      </RightSection>
+    </Wrapper>
   )
 };
 

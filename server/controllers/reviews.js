@@ -1,22 +1,29 @@
 import Review from "../models/Review.js";
 import Property from "../models/properties.js";
+import mongoose from "mongoose";
 
 // Create a new review
 export const createReview = async (req, res) => {
     try {
-        const { propertyId, rating, comment } = req.body;
+        const { propertyId, rating, comment, userName } = req.body;
         const userId = req.user.id;
-        const userName = req.user.name;
+
+        // Convert string IDs to ObjectId
+        const propertyObjectId = new mongoose.Types.ObjectId(propertyId);
+        const userObjectId = new mongoose.Types.ObjectId(userId);
 
         // Check if user already reviewed this property
-        const existingReview = await Review.findOne({ propertyId, userId });
+        const existingReview = await Review.findOne({ 
+            propertyId: propertyObjectId, 
+            userId: userObjectId 
+        });
         if (existingReview) {
             return res.status(400).json({ message: "You have already reviewed this property" });
         }
 
         const newReview = new Review({
-            propertyId,
-            userId,
+            propertyId: propertyObjectId,
+            userId: userObjectId,
             userName,
             rating,
             comment,
@@ -25,7 +32,7 @@ export const createReview = async (req, res) => {
         const savedReview = await newReview.save();
 
         // Update property average rating
-        const reviews = await Review.find({ propertyId });
+        const reviews = await Review.find({ propertyId: propertyObjectId });
         const avgRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
         await Property.findByIdAndUpdate(propertyId, { rating: avgRating.toFixed(1) });
 
@@ -40,7 +47,11 @@ export const createReview = async (req, res) => {
 export const getPropertyReviews = async (req, res) => {
     try {
         const { propertyId } = req.params;
-        const reviews = await Review.find({ propertyId })
+        
+        // Convert to ObjectId for proper matching
+        const propertyObjectId = new mongoose.Types.ObjectId(propertyId);
+        
+        const reviews = await Review.find({ propertyId: propertyObjectId })
             .sort({ createdAt: -1 })
             .limit(50);
         

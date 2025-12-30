@@ -12,13 +12,13 @@ const Container = styled.div`
   padding: 24px;
   background: ${({ theme }) => theme.card};
   border-radius: 12px;
-  margin-top: 24px;
   box-shadow: 0 2px 8px ${({ theme }) => theme.shadow};
+  border: 1px solid ${({ theme }) => theme.border || 'rgba(0,0,0,0.1)'};
+  height: fit-content;
   
   @media (max-width: 768px) {
     padding: 16px;
     gap: 20px;
-    margin-top: 16px;
   }
 `;
 
@@ -75,6 +75,19 @@ const RatingWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
+  
+  .MuiRating-root {
+    color: #facc15;
+    
+    .MuiRating-iconEmpty {
+      color: ${({ theme }) => theme.text_secondary || '#ccc'};
+    }
+    
+    .MuiRating-iconHover {
+      color: #fbbf24;
+      transform: scale(1.2);
+    }
+  }
 `;
 
 const TextArea = styled.textarea`
@@ -257,11 +270,21 @@ const ReviewSection = ({ propertyId }) => {
     try {
       setSubmitting(true);
       const token = localStorage.getItem("roamly-app-token");
-      await createReview(token, {
+      
+      // Debug logging
+      console.log('Current user:', currentUser);
+      console.log('User name:', currentUser?.name);
+      
+      const reviewData = {
         propertyId,
         rating: userRating,
         comment: comment.trim(),
-      });
+        userName: currentUser?.name || currentUser?.email?.split('@')[0] || 'Anonymous User',
+      };
+      
+      console.log('Submitting review:', reviewData);
+      
+      await createReview(token, reviewData);
       setUserRating(0);
       setComment("");
       fetchReviews();
