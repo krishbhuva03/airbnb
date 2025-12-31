@@ -22,6 +22,7 @@ import LiveServices from "./pages/LiveServices";
 import AdminDashboard from "./pages/AdminDashboard";
 import Footer from "./componnents/Footer";
 import ScrollToTop from "./componnents/ScrollToTop";
+import SessionExpiredPopup from "./componnents/SessionExpiredPopup";
 
 const Container = styled.div`
   width: 100%;
@@ -67,12 +68,13 @@ function AppContent() {
   const { isDarkMode } = useThemeMode();
   const [openAuth, setOpenAuth] = useState(false);
   const [initialLogin, setInitialLogin] = useState(true);
+  const [showSessionExpired, setShowSessionExpired] = useState(false);
   
   // Listen for session expiry from other devices
   useEffect(() => {
     const handleSessionExpired = () => {
-      dispatch(logout());
-      // Silently logout and redirect to home - no popup needed
+      // Show popup instead of silently logging out
+      setShowSessionExpired(true);
     };
     
     window.addEventListener('session-expired', handleSessionExpired);
@@ -106,6 +108,16 @@ function AppContent() {
 
           {openAuth && (
             <Authentication setOpenAuth={setOpenAuth} openAuth={openAuth} initialLogin={initialLogin} />
+          )}
+
+          {showSessionExpired && (
+            <SessionExpiredPopup 
+              onClose={() => {
+                setShowSessionExpired(false);
+                dispatch(logout());
+                window.location.href = '/';
+              }} 
+            />
           )}
 
           <Footer />
