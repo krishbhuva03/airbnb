@@ -73,7 +73,7 @@
 </p>
 </td>
 <td align="center" width="25%">
-<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Speaking%20Head.png" width="80" height="80"/>
+<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Mobile%20Phone.png" width="80" height="80"/>
 <h3>💬 Real-Time Chat</h3>
 <p align="left">
 • 🔴 Live support chat<br>
