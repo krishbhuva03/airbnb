@@ -73,7 +73,7 @@
 </p>
 </td>
 <td align="center" width="25%">
-<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Speech%20Balloon.png" width="80" height="80"/>
+<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Smilies/Speaking%20Head.png" width="80" height="80"/>
 <h3>💬 Real-Time Chat</h3>
 <p align="left">
 • 🔴 Live support chat<br>
@@ -491,7 +491,7 @@ flowchart LR
 </p>
 </td>
 <td align="center" width="33%">
-<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Check%20Mark%20Button.png" width="100"/>
+<img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Check%20Box%20with%20Check.png" width="100"/>
 <h3>✨ Data Integrity</h3>
 <p align="left">
 ✅ MongoDB ObjectId validation<br>
