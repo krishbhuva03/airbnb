@@ -346,7 +346,12 @@ const PropertyCard = ({ property }) => {
     <Details onClick={()=> navigate(`/properties/${property?._id}`)}>
       <Title>{property?.title}</Title>
       <Desc>{property?.Desc}</Desc>
-      <Location>{property?.location}</Location>
+      <Location>
+        {typeof property?.location === 'string' 
+          ? property?.location 
+          : `${property?.location?.city || ''}${property?.location?.state ? `, ${property.location.state}` : ''}${property?.location?.country ? `, ${property.location.country}` : ''}`
+        }
+      </Location>
       <Price>
         ${property?.price?.org}
         <Strike>${property?.price.mrp}</Strike>
