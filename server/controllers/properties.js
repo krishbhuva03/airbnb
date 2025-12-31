@@ -33,9 +33,10 @@ export const GetProperties = async (req, res, next) => {
 
         if(location){
             filter.$or = [
-                { title: { $regex: new RegExp(location, "i") } },
-                { desc: { $regex: new RegExp(location, "i") } },
-                { location: { $regex: new RegExp(location, "i") } },
+                { "location.city": { $regex: new RegExp(location, "i") } },
+                { "location.state": { $regex: new RegExp(location, "i") } },
+                { "location.country": { $regex: new RegExp(location, "i") } },
+                { "location.address": { $regex: new RegExp(location, "i") } },
             ]
         }
 
@@ -43,9 +44,19 @@ export const GetProperties = async (req, res, next) => {
             title: 1,
             desc: 1,
             img: 1,
-            rating:1,
-            location:1,
-            price: 1
+            images: 1,
+            rating: 1,
+            location: 1,
+            price: 1,
+            amenities: 1,
+            host: 1,
+            houseRules: 1,
+            checkInTime: 1,
+            checkOutTime: 1,
+            maxGuests: 1,
+            bedrooms: 1,
+            bathrooms: 1,
+            propertyType: 1
         })
         return res.status(200).json(propertyList)
     }catch(err){

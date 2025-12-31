@@ -246,6 +246,12 @@ const Home = () => {
       state :{location, CheckInDate, CheckOutDate}
     })
   }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearchClick();
+    }
+  }
   
 
   return (
@@ -267,6 +273,7 @@ const Home = () => {
             type="text" 
             value={location}
             onChange={(e)=> setLocation(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </InputWrapper>
 

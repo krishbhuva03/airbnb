@@ -59,14 +59,42 @@ router.get("/users", verifyToken, verifyAdmin, async (req, res) => {
 // Create a new property (admin only)
 router.post("/property", verifyToken, verifyAdmin, async (req, res) => {
     try {
-        const { title, desc, img, price, rating } = req.body;
+        const { 
+            title, 
+            desc, 
+            img, 
+            images,
+            price, 
+            rating,
+            amenities,
+            host,
+            location,
+            houseRules,
+            checkInTime,
+            checkOutTime,
+            maxGuests,
+            bedrooms,
+            bathrooms,
+            propertyType
+        } = req.body;
         
         const newProperty = new Property({
             title,
             desc,
             img,
+            images: images || [],
             price,
             rating: rating || 3.5,
+            amenities: amenities || [],
+            host: host || {},
+            location: location || {},
+            houseRules: houseRules || [],
+            checkInTime: checkInTime || "3:00 PM",
+            checkOutTime: checkOutTime || "11:00 AM",
+            maxGuests: maxGuests || 2,
+            bedrooms: bedrooms || 1,
+            bathrooms: bathrooms || 1,
+            propertyType: propertyType || "Entire home"
         });
         
         const savedProperty = await newProperty.save();
