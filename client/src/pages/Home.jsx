@@ -1,7 +1,8 @@
 import { SearchRounded, LocationOnOutlined, CalendarMonthOutlined } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import Loader from "../componnents/Loader";
 
 const Container = styled.div`
   padding: 80px 30px;
@@ -239,7 +240,35 @@ const Home = () => {
   const[location, setLocation] = useState("")
   const[CheckInDate, setCheckInDate] = useState("")
   const[CheckOutDate, setCheckOutDate] = useState("")
+  const[loading, setLoading] = useState(true)
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Track if page resources are loaded
+    const checkPageLoad = () => {
+      // Check if document is fully loaded
+      if (document.readyState === 'complete') {
+        // Add a small minimum display time for smooth UX (500ms)
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
+      }
+    };
+
+    // If already loaded, check immediately
+    if (document.readyState === 'complete') {
+      setTimeout(() => {
+        setLoading(false);
+      }, 500);
+    } else {
+      // Wait for window load event (all resources including images)
+      window.addEventListener('load', checkPageLoad);
+    }
+
+    return () => {
+      window.removeEventListener('load', checkPageLoad);
+    };
+  }, []);
 
   const handleSearchClick = () => {
     navigate ("/properties", {
@@ -255,7 +284,9 @@ const Home = () => {
   
 
   return (
-    <Container>
+    <>
+      <Loader isLoading={loading} />
+      <Container>
       <div>
         <Heading>Find Your Perfect Stay</Heading>
         <Subheading>
@@ -315,6 +346,7 @@ const Home = () => {
 
       </SearchContainer>
     </Container>
+    </>
   );
 };
 
