@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import PropertyCard from "../componnents/Cards/PropertyCard";
 import SkeletonCard from "../componnents/Cards/SkeletonCard";
@@ -225,34 +225,86 @@ const sortOptions = [
   { id: 'rating', label: 'Top Rated' },
 ];
 
+const LoadMoreButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 32px;
+  margin: 32px auto 0;
+  background: ${({ theme }) => theme.primary || '#FF385C'};
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+`;
+
 const PropertyListing = () => {
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
   const [properties, setProperties] = useState([]);
+  const [pagination, setPagination] = useState(null);
   const [sortBy, setSortBy] = useState('newest');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
   const { location: loc } = location.state || {};
-  const filter = loc ? `location=${loc}` : '';
 
-  const getproperty = useCallback(async () => {
-    setLoading(true);
+  const fetchProperties = useCallback(async (page = 1, append = false) => {
+    if (page === 1) {
+      setLoading(true);
+    } else {
+      setLoadingMore(true);
+    }
+    
     try {
-      const res = await getAllProperty(filter);
-      if (!res.data) {
-        setProperties([]);
+      const res = await getAllProperty(loc || '', page, 12, sortBy);
+      if (!res.data || !res.data.properties) {
+        if (!append) setProperties([]);
         return;
       }
-      setProperties(res.data);
+      
+      if (append) {
+        setProperties(prev => [...prev, ...res.data.properties]);
+      } else {
+        setProperties(res.data.properties);
+      }
+      setPagination(res.data.pagination);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
-  }, [filter]);
+  }, [loc, sortBy]);
 
   useEffect(() => {
-    getproperty();
-  }, [getproperty]);
+    fetchProperties(1, false);
+  }, [fetchProperties]);
+
+  const handleLoadMore = () => {
+    if (pagination?.hasMore) {
+      fetchProperties(pagination.currentPage + 1, true);
+    }
+  };
+
+  const handleSortChange = (newSort) => {
+    setSortBy(newSort);
+    setDropdownOpen(false);
+  };
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -263,22 +315,6 @@ const PropertyListing = () => {
     }
   }, [dropdownOpen]);
 
-  // Sort properties based on selected option
-  const sortedProperties = useMemo(() => {
-    const sorted = [...properties];
-    switch (sortBy) {
-      case 'price-low':
-        return sorted.sort((a, b) => a.price.org - b.price.org);
-      case 'price-high':
-        return sorted.sort((a, b) => b.price.org - a.price.org);
-      case 'rating':
-        return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-      case 'newest':
-      default:
-        return sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    }
-  }, [properties, sortBy]);
-
   const currentSortLabel = sortOptions.find(opt => opt.id === sortBy)?.label || 'Sort';
 
   return (
@@ -288,8 +324,10 @@ const PropertyListing = () => {
           <PageTitle>
             {loc ? `Stays in ${loc}` : "All Stays"}
           </PageTitle>
-          {!loading && properties.length > 0 && (
-            <ResultCount>{properties.length} properties found</ResultCount>
+          {!loading && pagination && (
+            <ResultCount>
+              Showing {properties.length} of {pagination.totalCount} properties
+            </ResultCount>
           )}
         </div>
         
@@ -308,10 +346,7 @@ const PropertyListing = () => {
               <SortOption
                 key={option.id}
                 active={sortBy === option.id}
-                onClick={() => {
-                  setSortBy(option.id);
-                  setDropdownOpen(false);
-                }}
+                onClick={() => handleSortChange(option.id)}
               >
                 {option.label}
               </SortOption>
@@ -326,12 +361,23 @@ const PropertyListing = () => {
             <SkeletonCard key={index} />
           ))}
         </PropertyGrid>
-      ) : sortedProperties.length > 0 ? (
-        <PropertyGrid>
-          {sortedProperties.map((property) => (
-            <PropertyCard key={property._id} property={property} />
-          ))}
-        </PropertyGrid>
+      ) : properties.length > 0 ? (
+        <>
+          <PropertyGrid>
+            {properties.map((property) => (
+              <PropertyCard key={property._id} property={property} />
+            ))}
+          </PropertyGrid>
+          
+          {pagination?.hasMore && (
+            <LoadMoreButton 
+              onClick={handleLoadMore}
+              disabled={loadingMore}
+            >
+              {loadingMore ? 'Loading...' : 'Load More Properties'}
+            </LoadMoreButton>
+          )}
+        </>
       ) : (
         <NoResults>
           <h3>No properties found</h3>
@@ -343,3 +389,4 @@ const PropertyListing = () => {
 };
 
 export default PropertyListing;
+

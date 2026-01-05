@@ -22,7 +22,14 @@ export const UserSignUp = async (data) => await API.post("user/signup", data)
 
 export const UserSignIn = async (data) => await API.post("user/signin", data)
 
-export const getAllProperty = async (filter) => await API.get(`/property/get?${filter}`)
+export const getAllProperty = async (filter, page = 1, limit = 12, sort = 'newest') => {
+    const params = new URLSearchParams();
+    if (filter) params.append('location', filter);
+    params.append('page', page);
+    params.append('limit', limit);
+    params.append('sort', sort);
+    return await API.get(`/property/get?${params.toString()}`);
+}
 
 export const getPropertyDetails = async (id) => await API.get(`/property/${id}`)
 
