@@ -28,7 +28,17 @@ export const AddProperties = async (req, res, next) => {
 
 export const GetProperties = async (req, res, next) => {
     try{
-        let { location } = req.query;
+        let { location, page = 1, limit = 12, sort = 'newest' } = req.query;
+        
+        // Parse pagination parameters
+        page = parseInt(page, 10);
+        limit = parseInt(limit, 10);
+        
+        // Validate pagination
+        if (page < 1) page = 1;
+        if (limit < 1) limit = 12;
+        if (limit > 50) limit = 50; // Max limit to prevent abuse
+        
         const filter = {}
 
         if(location){
@@ -40,25 +50,61 @@ export const GetProperties = async (req, res, next) => {
             ]
         }
 
-        const propertyList = await properties.find(filter, {
+        // Determine sort order
+        let sortOption = { createdAt: -1 }; // Default: newest first
+        switch(sort) {
+            case 'price-low':
+                sortOption = { "price.org": 1 };
+                break;
+            case 'price-high':
+                sortOption = { "price.org": -1 };
+                break;
+            case 'rating':
+                sortOption = { rating: -1 };
+                break;
+            case 'newest':
+            default:
+                sortOption = { createdAt: -1 };
+        }
+
+        // Optimized projection for listing view (minimal fields)
+        const listingProjection = {
             title: 1,
             desc: 1,
-            img: 1,
-            images: 1,
+            img: 1,  // Main image only
             rating: 1,
             location: 1,
             price: 1,
-            amenities: 1,
-            host: 1,
-            houseRules: 1,
-            checkInTime: 1,
-            checkOutTime: 1,
+            propertyType: 1,
             maxGuests: 1,
             bedrooms: 1,
             bathrooms: 1,
-            propertyType: 1
-        })
-        return res.status(200).json(propertyList)
+            createdAt: 1
+        };
+
+        // Get total count for pagination
+        const totalCount = await properties.countDocuments(filter);
+        
+        // Calculate skip value
+        const skip = (page - 1) * limit;
+
+        const propertyList = await properties
+            .find(filter, listingProjection)
+            .sort(sortOption)
+            .skip(skip)
+            .limit(limit)
+            .lean(); // Use lean() for better performance (returns plain JS objects)
+        
+        return res.status(200).json({
+            properties: propertyList,
+            pagination: {
+                currentPage: page,
+                totalPages: Math.ceil(totalCount / limit),
+                totalCount,
+                limit,
+                hasMore: skip + propertyList.length < totalCount
+            }
+        });
     }catch(err){
         next(err)
     }

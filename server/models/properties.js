@@ -127,4 +127,19 @@ const propertySchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
+// Add indexes for commonly queried fields
+propertySchema.index({ "location.city": 1 });
+propertySchema.index({ "location.state": 1 });
+propertySchema.index({ "location.country": 1 });
+propertySchema.index({ "price.org": 1 });
+propertySchema.index({ rating: -1 });
+propertySchema.index({ createdAt: -1 });
+// Compound text index for location search
+propertySchema.index({ 
+    "location.city": "text", 
+    "location.state": "text", 
+    "location.country": "text",
+    "location.address": "text"
+});
+
 export default mongoose.model("Property", propertySchema);

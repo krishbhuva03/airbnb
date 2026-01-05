@@ -387,9 +387,12 @@ const Discover = () => {
   const fetchProperties = async () => {
     try {
       setLoading(true);
-      const response = await getAllProperty('');
-      if (response?.data) {
-        // Shuffle and pick 3-4 random properties as recommendations
+      // Use the new paginated API with limit of 4 for recommendations
+      const response = await getAllProperty('', 1, 4, 'rating');
+      if (response?.data?.properties) {
+        setProperties(response.data.properties);
+      } else if (response?.data && Array.isArray(response.data)) {
+        // Fallback for old API format
         const shuffled = [...response.data].sort(() => 0.5 - Math.random());
         const selected = shuffled.slice(0, Math.min(4, shuffled.length));
         setProperties(selected);

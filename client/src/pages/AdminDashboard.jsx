@@ -230,12 +230,13 @@ const AdminDashboard = () => {
       const [statsRes, usersRes, propertiesRes] = await Promise.all([
         getAdminStats(token),
         getAdminUsers(token),
-        getAllProperty("")
+        getAllProperty("", 1, 50, "newest") // Fetch up to 50 properties for admin
       ]);
       
       setStats(statsRes.data);
       setUsers(usersRes.data);
-      setProperties(propertiesRes.data);
+      // Handle new paginated response format
+      setProperties(propertiesRes.data?.properties || propertiesRes.data || []);
     } catch (error) {
       console.error("Error fetching admin data:", error);
     } finally {
