@@ -113,3 +113,21 @@ export const deleteProperty = async (token, id) =>
     await API.delete(`/admin/property/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
     });
+
+// Blog APIs
+export const getBlogs = async (page = 1, limit = 10, category = null) => {
+    const params = new URLSearchParams();
+    params.append('page', page);
+    params.append('limit', limit);
+    if (category) params.append('category', category);
+    return await API.get(`/blogs?${params.toString()}`);
+};
+
+export const getBlogBySlug = async (slug) => 
+    await API.get(`/blogs/slug/${slug}`);
+
+export const getBlogById = async (id) => 
+    await API.get(`/blogs/${id}`);
+
+export const getBlogCategories = async () => 
+    await API.get(`/blogs/categories`);
