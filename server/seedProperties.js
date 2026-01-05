@@ -763,6 +763,571 @@ const sampleProperties = [
     bedrooms: 2,
     bathrooms: 1,
     propertyType: "Entire hanok"
+  },
+  // ========== ADDITIONAL GLOBAL PROPERTIES ==========
+  {
+    title: "Traditional Japanese Ryokan in Kyoto",
+    desc: "Step into timeless Japanese elegance at this authentic ryokan in the heart of Kyoto's historic Gion district. Tatami rooms, private onsen bath, kaiseki cuisine, and stunning zen garden views. Walking distance to temples and bamboo groves.",
+    img: "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=1200",
+      "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=1200",
+      "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1200",
+      "https://images.unsplash.com/photo-1490806843957-31f4c9a91c65?w=1200",
+      "https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?w=1200"
+    ],
+    rating: 4.97,
+    price: { org: 350, mrp: 450, off: 22 },
+    amenities: [
+      { icon: "wifi", name: "Free WiFi" },
+      { icon: "onsen", name: "Private Onsen" },
+      { icon: "breakfast", name: "Kaiseki Breakfast" },
+      { icon: "garden", name: "Zen Garden" },
+      { icon: "tea", name: "Tea Ceremony" },
+      { icon: "kimono", name: "Yukata Provided" }
+    ],
+    host: {
+      name: "Yuki Tanaka",
+      image: "https://randomuser.me/api/portraits/women/85.jpg",
+      joinedDate: new Date("2016-04-10"),
+      isSuperhost: true
+    },
+    location: {
+      address: "123 Gion-machi",
+      city: "Kyoto",
+      state: "Kyoto Prefecture",
+      country: "Japan",
+      coordinates: { lat: 35.0036, lng: 135.7756 }
+    },
+    houseRules: [
+      "Remove shoes indoors",
+      "Quiet hours after 9 PM",
+      "Respect onsen etiquette",
+      "No outside food"
+    ],
+    checkInTime: "3:00 PM",
+    checkOutTime: "10:00 AM",
+    maxGuests: 4,
+    bedrooms: 2,
+    bathrooms: 2,
+    propertyType: "Entire ryokan"
+  },
+  {
+    title: "Swiss Alpine Chalet with Matterhorn Views",
+    desc: "Wake up to the iconic Matterhorn from this luxurious timber chalet in Zermatt. Cozy fireplace, private sauna, ski-in/ski-out access, and authentic Swiss hospitality. Perfect for winter adventures or summer hiking in the Alps.",
+    img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200",
+      "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1200",
+      "https://images.unsplash.com/photo-1502784444187-359ac186c5bb?w=1200",
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200",
+      "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1200"
+    ],
+    rating: 4.95,
+    price: { org: 520, mrp: 650, off: 20 },
+    amenities: [
+      { icon: "wifi", name: "High-Speed WiFi" },
+      { icon: "fireplace", name: "Wood Fireplace" },
+      { icon: "sauna", name: "Private Sauna" },
+      { icon: "ski", name: "Ski Storage" },
+      { icon: "view", name: "Matterhorn View" },
+      { icon: "parking", name: "Heated Garage" }
+    ],
+    host: {
+      name: "Hans Mueller",
+      image: "https://randomuser.me/api/portraits/men/86.jpg",
+      joinedDate: new Date("2017-12-01"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Bahnhofstrasse 42",
+      city: "Zermatt",
+      state: "Valais",
+      country: "Switzerland",
+      coordinates: { lat: 46.0207, lng: 7.7491 }
+    },
+    houseRules: [
+      "No smoking",
+      "Ski boots off indoors",
+      "Fireplace instructions provided",
+      "Quiet hours after 10 PM"
+    ],
+    checkInTime: "4:00 PM",
+    checkOutTime: "10:00 AM",
+    maxGuests: 8,
+    bedrooms: 4,
+    bathrooms: 3,
+    propertyType: "Entire chalet"
+  },
+  {
+    title: "Moroccan Riad in Marrakech Medina",
+    desc: "Escape to this stunning traditional riad hidden within the ancient walls of Marrakech's medina. Central courtyard with fountain, rooftop terrace with Atlas Mountain views, intricate tile work, and authentic Moroccan hospitality.",
+    img: "https://images.unsplash.com/photo-1539437829697-1b4ed5aebd19?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1539437829697-1b4ed5aebd19?w=1200",
+      "https://images.unsplash.com/photo-1548018560-c7196b5e20c4?w=1200",
+      "https://images.unsplash.com/photo-1509840841025-9088ba78a826?w=1200",
+      "https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?w=1200",
+      "https://images.unsplash.com/photo-1531501410720-c8d437636169?w=1200"
+    ],
+    rating: 4.93,
+    price: { org: 180, mrp: 230, off: 22 },
+    amenities: [
+      { icon: "wifi", name: "Free WiFi" },
+      { icon: "pool", name: "Plunge Pool" },
+      { icon: "breakfast", name: "Moroccan Breakfast" },
+      { icon: "terrace", name: "Rooftop Terrace" },
+      { icon: "ac", name: "Air Conditioning" },
+      { icon: "spa", name: "Hammam Access" }
+    ],
+    host: {
+      name: "Fatima El Amrani",
+      image: "https://randomuser.me/api/portraits/women/87.jpg",
+      joinedDate: new Date("2018-03-20"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Derb Sidi Ahmed",
+      city: "Marrakech",
+      state: "Marrakech-Safi",
+      country: "Morocco",
+      coordinates: { lat: 31.6295, lng: -7.9811 }
+    },
+    houseRules: [
+      "Respect local customs",
+      "Remove shoes in courtyard",
+      "No alcohol in common areas",
+      "Quiet hours after 11 PM"
+    ],
+    checkInTime: "2:00 PM",
+    checkOutTime: "11:00 AM",
+    maxGuests: 6,
+    bedrooms: 3,
+    bathrooms: 3,
+    propertyType: "Entire riad"
+  },
+  {
+    title: "Oceanfront Villa in Algarve, Portugal",
+    desc: "Perched on dramatic cliffs overlooking the Atlantic, this contemporary villa offers infinity pool views, private beach access, and stunning sunsets. Explore hidden caves, world-class golf, and charming fishing villages nearby.",
+    img: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200",
+      "https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?w=1200"
+    ],
+    rating: 4.96,
+    price: { org: 420, mrp: 520, off: 19 },
+    amenities: [
+      { icon: "wifi", name: "High-Speed WiFi" },
+      { icon: "pool", name: "Infinity Pool" },
+      { icon: "beach", name: "Beach Access" },
+      { icon: "ac", name: "Air Conditioning" },
+      { icon: "bbq", name: "Outdoor BBQ" },
+      { icon: "gym", name: "Home Gym" }
+    ],
+    host: {
+      name: "João Silva",
+      image: "https://randomuser.me/api/portraits/men/88.jpg",
+      joinedDate: new Date("2019-06-15"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Praia da Marinha",
+      city: "Lagoa",
+      state: "Algarve",
+      country: "Portugal",
+      coordinates: { lat: 37.0893, lng: -8.4108 }
+    },
+    houseRules: [
+      "No smoking indoors",
+      "Pool hours until 10 PM",
+      "Respect cliff safety",
+      "Pets welcome"
+    ],
+    checkInTime: "3:00 PM",
+    checkOutTime: "11:00 AM",
+    maxGuests: 10,
+    bedrooms: 5,
+    bathrooms: 4,
+    propertyType: "Entire villa"
+  },
+  {
+    title: "Balinese Jungle Villa with Rice Field Views",
+    desc: "Immerse yourself in Bali's spiritual heart at this stunning villa surrounded by emerald rice terraces. Private infinity pool, open-air living, daily yoga, and authentic Balinese spa treatments. Minutes from Ubud's art galleries and temples.",
+    img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1200",
+      "https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1200",
+      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1200",
+      "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=1200",
+      "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=1200"
+    ],
+    rating: 4.98,
+    price: { org: 280, mrp: 350, off: 20 },
+    amenities: [
+      { icon: "wifi", name: "Free WiFi" },
+      { icon: "pool", name: "Private Pool" },
+      { icon: "yoga", name: "Daily Yoga" },
+      { icon: "spa", name: "In-Villa Spa" },
+      { icon: "breakfast", name: "Breakfast Included" },
+      { icon: "view", name: "Rice Terrace View" }
+    ],
+    host: {
+      name: "Made Wijaya",
+      image: "https://randomuser.me/api/portraits/men/89.jpg",
+      joinedDate: new Date("2017-08-10"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Jl. Suweta",
+      city: "Ubud",
+      state: "Bali",
+      country: "Indonesia",
+      coordinates: { lat: -8.5069, lng: 115.2625 }
+    },
+    houseRules: [
+      "Respect Hindu offerings",
+      "Quiet hours after 9 PM",
+      "No shoes indoors",
+      "Eco-friendly practices"
+    ],
+    checkInTime: "2:00 PM",
+    checkOutTime: "12:00 PM",
+    maxGuests: 4,
+    bedrooms: 2,
+    bathrooms: 2,
+    propertyType: "Entire villa"
+  },
+  {
+    title: "Luxury Penthouse in Dubai Marina",
+    desc: "Experience ultimate luxury in this spectacular penthouse overlooking Dubai Marina and Palm Jumeirah. Floor-to-ceiling windows, private rooftop terrace, smart home technology, and world-class amenities. Minutes from beaches and entertainment.",
+    img: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200",
+      "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=1200",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200"
+    ],
+    rating: 4.91,
+    price: { org: 750, mrp: 950, off: 21 },
+    amenities: [
+      { icon: "wifi", name: "Fiber WiFi" },
+      { icon: "pool", name: "Rooftop Jacuzzi" },
+      { icon: "gym", name: "Private Gym" },
+      { icon: "ac", name: "Climate Control" },
+      { icon: "concierge", name: "24/7 Concierge" },
+      { icon: "parking", name: "Valet Parking" }
+    ],
+    host: {
+      name: "Ahmed Al Maktoum",
+      image: "https://randomuser.me/api/portraits/men/90.jpg",
+      joinedDate: new Date("2019-01-15"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Marina Walk Tower 5",
+      city: "Dubai",
+      state: "Dubai",
+      country: "United Arab Emirates",
+      coordinates: { lat: 25.0772, lng: 55.1395 }
+    },
+    houseRules: [
+      "No parties",
+      "Respect building rules",
+      "No smoking",
+      "Visitors must register"
+    ],
+    checkInTime: "3:00 PM",
+    checkOutTime: "12:00 PM",
+    maxGuests: 6,
+    bedrooms: 3,
+    bathrooms: 3,
+    propertyType: "Entire penthouse"
+  },
+  {
+    title: "Lakefront Lodge in Queenstown, New Zealand",
+    desc: "Adventure meets luxury at this stunning lodge on Lake Wakatipu with breathtaking views of The Remarkables. Private jetty, outdoor hot tub, and endless adventure options: skiing, bungee jumping, jet boating, and Lord of the Rings tours.",
+    img: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=1200",
+      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1200",
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+      "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200"
+    ],
+    rating: 4.94,
+    price: { org: 480, mrp: 600, off: 20 },
+    amenities: [
+      { icon: "wifi", name: "Starlink WiFi" },
+      { icon: "hottub", name: "Outdoor Hot Tub" },
+      { icon: "kayak", name: "Kayaks Included" },
+      { icon: "fireplace", name: "Stone Fireplace" },
+      { icon: "view", name: "Lake & Mountain View" },
+      { icon: "bbq", name: "Outdoor Kitchen" }
+    ],
+    host: {
+      name: "Sarah Thompson",
+      image: "https://randomuser.me/api/portraits/women/91.jpg",
+      joinedDate: new Date("2018-04-20"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Glenorchy Road",
+      city: "Queenstown",
+      state: "Otago",
+      country: "New Zealand",
+      coordinates: { lat: -45.0312, lng: 168.6626 }
+    },
+    houseRules: [
+      "No smoking",
+      "Life jackets required for water activities",
+      "Respect wildlife",
+      "Hot tub hours until 11 PM"
+    ],
+    checkInTime: "3:00 PM",
+    checkOutTime: "10:00 AM",
+    maxGuests: 8,
+    bedrooms: 4,
+    bathrooms: 3,
+    propertyType: "Entire lodge"
+  },
+  {
+    title: "Rainforest Treehouse in Costa Rica",
+    desc: "Sleep among the clouds in this eco-luxury treehouse suspended in the Costa Rican rainforest. Wake to howler monkeys, spot toucans from your private deck, and explore zip lines, waterfalls, and volcanic hot springs.",
+    img: "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1200",
+      "https://images.unsplash.com/photo-1618767689160-da3fb810aad7?w=1200",
+      "https://images.unsplash.com/photo-1542718610-a1d656d1884c?w=1200",
+      "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1200",
+      "https://images.unsplash.com/photo-1444525873963-75d329ef9e1b?w=1200"
+    ],
+    rating: 4.96,
+    price: { org: 220, mrp: 280, off: 21 },
+    amenities: [
+      { icon: "wifi", name: "Free WiFi" },
+      { icon: "nature", name: "Wildlife Watching" },
+      { icon: "breakfast", name: "Breakfast Included" },
+      { icon: "eco", name: "Eco-Friendly" },
+      { icon: "hiking", name: "Trail Access" },
+      { icon: "deck", name: "Private Deck" }
+    ],
+    host: {
+      name: "Carlos Mendez",
+      image: "https://randomuser.me/api/portraits/men/92.jpg",
+      joinedDate: new Date("2017-11-05"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Monteverde Cloud Forest",
+      city: "Monteverde",
+      state: "Puntarenas",
+      country: "Costa Rica",
+      coordinates: { lat: 10.3157, lng: -84.8252 }
+    },
+    houseRules: [
+      "No feeding wildlife",
+      "Stay on marked trails",
+      "Eco-friendly products only",
+      "Quiet hours after 9 PM"
+    ],
+    checkInTime: "2:00 PM",
+    checkOutTime: "11:00 AM",
+    maxGuests: 2,
+    bedrooms: 1,
+    bathrooms: 1,
+    propertyType: "Treehouse"
+  },
+  {
+    title: "Floating Villa in Phuket, Thailand",
+    desc: "Experience Thailand's most unique stay in this stunning floating villa anchored in the crystal waters of Phang Nga Bay. Glass floor panels, private chef, kayaking to limestone karsts, and sunset dinners on the water.",
+    img: "https://images.unsplash.com/photo-1520483601560-389dff434fdf?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1520483601560-389dff434fdf?w=1200",
+      "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1200",
+      "https://images.unsplash.com/photo-1519451241324-20b4ea2c4220?w=1200",
+      "https://images.unsplash.com/photo-1506665531195-3566af2b4dfa?w=1200",
+      "https://images.unsplash.com/photo-1540202404-1b927e27fa8b?w=1200"
+    ],
+    rating: 4.99,
+    price: { org: 680, mrp: 850, off: 20 },
+    amenities: [
+      { icon: "wifi", name: "Satellite WiFi" },
+      { icon: "chef", name: "Private Chef" },
+      { icon: "kayak", name: "Kayaks Included" },
+      { icon: "snorkel", name: "Snorkeling Gear" },
+      { icon: "ac", name: "Air Conditioning" },
+      { icon: "sunset", name: "360° Views" }
+    ],
+    host: {
+      name: "Somchai Petcharoen",
+      image: "https://randomuser.me/api/portraits/men/93.jpg",
+      joinedDate: new Date("2018-06-20"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Phang Nga Bay",
+      city: "Phuket",
+      state: "Phuket Province",
+      country: "Thailand",
+      coordinates: { lat: 8.2768, lng: 98.4582 }
+    },
+    houseRules: [
+      "Life jackets required",
+      "No jumping off platform",
+      "Respect marine life",
+      "Chef meals at scheduled times"
+    ],
+    checkInTime: "12:00 PM",
+    checkOutTime: "10:00 AM",
+    maxGuests: 4,
+    bedrooms: 2,
+    bathrooms: 2,
+    propertyType: "Floating villa"
+  },
+  {
+    title: "Historic Castle in Scottish Highlands",
+    desc: "Live like royalty in this 16th-century castle nestled in the dramatic Scottish Highlands. Grand halls, roaring fireplaces, four-poster beds, and whisky tastings. Explore lochs, hike munros, and search for the Loch Ness monster.",
+    img: "https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1533154683836-84ea7a0bc310?w=1200",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200",
+      "https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200",
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200"
+    ],
+    rating: 4.92,
+    price: { org: 580, mrp: 750, off: 23 },
+    amenities: [
+      { icon: "wifi", name: "Free WiFi" },
+      { icon: "fireplace", name: "Grand Fireplaces" },
+      { icon: "whisky", name: "Whisky Tasting" },
+      { icon: "garden", name: "Castle Grounds" },
+      { icon: "breakfast", name: "Scottish Breakfast" },
+      { icon: "parking", name: "Private Parking" }
+    ],
+    host: {
+      name: "Alistair MacLeod",
+      image: "https://randomuser.me/api/portraits/men/94.jpg",
+      joinedDate: new Date("2016-09-12"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Highland Estate",
+      city: "Inverness",
+      state: "Scottish Highlands",
+      country: "United Kingdom",
+      coordinates: { lat: 57.4778, lng: -4.2247 }
+    },
+    houseRules: [
+      "Respect historic property",
+      "No smoking indoors",
+      "Firewood provided",
+      "Mind the ghost stories"
+    ],
+    checkInTime: "4:00 PM",
+    checkOutTime: "11:00 AM",
+    maxGuests: 12,
+    bedrooms: 6,
+    bathrooms: 5,
+    propertyType: "Entire castle"
+  },
+  {
+    title: "Seaside Villa in Dubrovnik, Croatia",
+    desc: "Step into Game of Thrones at this stunning villa overlooking the ancient walls of Dubrovnik. Private terrace with Adriatic views, stone architecture, modern amenities. Walk the King's Landing walls and swim in hidden coves.",
+    img: "https://images.unsplash.com/photo-1580502304784-8985b7eb7260?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1580502304784-8985b7eb7260?w=1200",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200"
+    ],
+    rating: 4.94,
+    price: { org: 340, mrp: 420, off: 19 },
+    amenities: [
+      { icon: "wifi", name: "High-Speed WiFi" },
+      { icon: "terrace", name: "Sea View Terrace" },
+      { icon: "ac", name: "Air Conditioning" },
+      { icon: "kitchen", name: "Full Kitchen" },
+      { icon: "beach", name: "Beach Access" },
+      { icon: "parking", name: "Private Parking" }
+    ],
+    host: {
+      name: "Ivana Horvat",
+      image: "https://randomuser.me/api/portraits/women/95.jpg",
+      joinedDate: new Date("2018-05-08"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Ploče District",
+      city: "Dubrovnik",
+      state: "Dubrovnik-Neretva",
+      country: "Croatia",
+      coordinates: { lat: 42.6507, lng: 18.0944 }
+    },
+    houseRules: [
+      "No smoking",
+      "Quiet hours after 11 PM",
+      "No parties",
+      "Respect historic area"
+    ],
+    checkInTime: "3:00 PM",
+    checkOutTime: "11:00 AM",
+    maxGuests: 6,
+    bedrooms: 3,
+    bathrooms: 2,
+    propertyType: "Entire villa"
+  },
+  {
+    title: "Patagonia Mountain Retreat in Argentina",
+    desc: "Escape to the edge of the world at this remote mountain lodge in Patagonia. Surrounded by glaciers, pristine lakes, and dramatic peaks. Hiking, horseback riding, and stargazing under the clearest skies on Earth.",
+    img: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
+    images: [
+      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200",
+      "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1200",
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200",
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200",
+      "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1200"
+    ],
+    rating: 4.97,
+    price: { org: 390, mrp: 480, off: 19 },
+    amenities: [
+      { icon: "wifi", name: "Starlink WiFi" },
+      { icon: "fireplace", name: "Wood Stove" },
+      { icon: "hiking", name: "Guided Hikes" },
+      { icon: "horse", name: "Horseback Riding" },
+      { icon: "view", name: "Glacier Views" },
+      { icon: "kitchen", name: "Full Kitchen" }
+    ],
+    host: {
+      name: "Martín Fernández",
+      image: "https://randomuser.me/api/portraits/men/96.jpg",
+      joinedDate: new Date("2017-03-25"),
+      isSuperhost: true
+    },
+    location: {
+      address: "Ruta 40",
+      city: "El Chaltén",
+      state: "Santa Cruz",
+      country: "Argentina",
+      coordinates: { lat: -49.3314, lng: -72.8862 }
+    },
+    houseRules: [
+      "4x4 recommended",
+      "Pack layers for weather",
+      "Respect nature reserve",
+      "No drones"
+    ],
+    checkInTime: "2:00 PM",
+    checkOutTime: "10:00 AM",
+    maxGuests: 6,
+    bedrooms: 3,
+    bathrooms: 2,
+    propertyType: "Entire lodge"
   }
 ];
 
