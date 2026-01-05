@@ -10,6 +10,7 @@ import ContactRoutes from "./routes/contact.js";
 import ChatRoutes from "./routes/chat.js";
 import ReviewRoutes from "./routes/reviews.js";
 import AdminRoutes from "./routes/admin.js";
+import BlogRoutes from "./routes/blogs.js";
 import Chat from "./models/Chat.js";
 import User from "./models/user.js";
 
@@ -55,6 +56,7 @@ app.use("/api/contact", ContactRoutes)
 app.use("/api/chat", ChatRoutes)
 app.use("/api/reviews", ReviewRoutes)
 app.use("/api/admin", AdminRoutes)
+app.use("/api/blogs", BlogRoutes)
 
 // Track online users
 const onlineUsers = new Map(); // Map<socketId, { odId, name, isAdmin }>

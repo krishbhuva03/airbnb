@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getBlogById } from '../api';
+import AdPlacement from '../componnents/AdPlacement';
 
-const Container = styled.div`
-  padding: 20px;
-  max-width: 900px;
+const PageWrapper = styled.div`
+  display: flex;
+  max-width: 1200px;
   margin: 0 auto;
-  color: white;
+  padding: 20px;
+  gap: 30px;
   
-  @media (max-width: 768px) {
-    padding: 16px;
+  @media (max-width: 968px) {
+    flex-direction: column;
+    gap: 20px;
   }
   
   @media (max-width: 480px) {
@@ -17,8 +21,29 @@ const Container = styled.div`
   }
 `;
 
+const MainContent = styled.div`
+  flex: 1;
+  max-width: 800px;
+  color: white;
+`;
+
+const Sidebar = styled.aside`
+  width: 300px;
+  flex-shrink: 0;
+  
+  @media (max-width: 968px) {
+    width: 100%;
+    display: none; /* Hide sidebar on mobile, show in-content ads instead */
+  }
+`;
+
+const StickyWrapper = styled.div`
+  position: sticky;
+  top: 100px;
+`;
+
 const BackButton = styled.button`
-  background: ${({ theme }) => theme.primary};
+  background: ${({ theme }) => theme.primary || '#ff385c'};
   color: white;
   border: none;
   padding: 10px 20px;
@@ -32,7 +57,7 @@ const BackButton = styled.button`
   min-height: 44px;
 
   &:hover {
-    background: ${({ theme }) => theme.primary_dark};
+    background: ${({ theme }) => theme.primary_dark || '#e61e4d'};
   }
   
   @media (max-width: 480px) {
@@ -46,7 +71,7 @@ const BackButton = styled.button`
       transform: scale(0.98);
     }
     &:hover {
-      background: ${({ theme }) => theme.primary};
+      background: ${({ theme }) => theme.primary || '#ff385c'};
     }
   }
 `;
@@ -59,9 +84,21 @@ const BlogHeader = styled.div`
   }
 `;
 
+const CategoryTag = styled.span`
+  display: inline-block;
+  background: ${({ theme }) => theme.primary || '#ff385c'};
+  color: white;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  margin-bottom: 16px;
+`;
+
 const Title = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 20px;
+  line-height: 1.2;
   
   @media (max-width: 768px) {
     font-size: 2rem;
@@ -85,12 +122,19 @@ const MetaInfo = styled.div`
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 20px;
   flex-wrap: wrap;
+  align-items: center;
   
   @media (max-width: 480px) {
     gap: 10px;
     font-size: 14px;
     margin-bottom: 16px;
   }
+`;
+
+const MetaItem = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 6px;
 `;
 
 const FeaturedImage = styled.img`
@@ -124,6 +168,13 @@ const Content = styled.div`
   line-height: 1.8;
   font-size: 1.1rem;
 
+  h2 {
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    color: white;
+  }
+
   p {
     margin-bottom: 20px;
   }
@@ -132,6 +183,10 @@ const Content = styled.div`
     padding: 24px;
     font-size: 1rem;
     line-height: 1.7;
+    
+    h2 {
+      font-size: 1.4rem;
+    }
     
     p {
       margin-bottom: 16px;
@@ -144,101 +199,209 @@ const Content = styled.div`
     border-radius: 8px;
     line-height: 1.6;
     
+    h2 {
+      font-size: 1.25rem;
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+    
     p {
       margin-bottom: 14px;
     }
   }
 `;
 
-// Sample blog data - replace with your actual data source
-const blogData = {
-  1: {
-    title: 'Top 10 Vacation Spots',
-    date: 'April 11, 2025',
-    author: 'Travel Expert',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-    content: `
-      <p>Discovering the perfect vacation spot can transform an ordinary trip into an unforgettable adventure. In this comprehensive guide, we'll explore ten breathtaking destinations that offer unique experiences for every type of traveler.</p>
-      
-      <p>From the pristine beaches of the Maldives to the snow-capped peaks of the Swiss Alps, each location has been carefully selected based on factors such as natural beauty, cultural significance, and visitor experience.</p>
-      
-      <p>1. Santorini, Greece - Known for its stunning sunsets and white-washed buildings perched on cliffs overlooking the Aegean Sea.</p>
-      
-      <p>2. Bali, Indonesia - A perfect blend of spiritual tranquility and tropical paradise, offering everything from pristine beaches to ancient temples.</p>
-      
-      <p>3. Banff National Park, Canada - A wilderness wonderland featuring turquoise lakes, majestic mountains, and abundant wildlife.</p>
-      
-      <p>Continue reading to discover the remaining seven destinations that made our carefully curated list...</p>
-    `
-  },
-  2: {
-    title: 'Budget Travel Tips',
-    date: 'April 10, 2025',
-    author: 'Budget Explorer',
-    image: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2074&q=80',
-    content: `
-      <p>Traveling on a budget doesn't mean compromising on experiences. With careful planning and smart choices, you can explore the world without breaking the bank.</p>
-      
-      <p>Here are some proven strategies to help you maximize your travel budget:</p>
-      
-      <p>1. Travel during off-peak seasons to take advantage of lower prices and fewer crowds.</p>
-      
-      <p>2. Use flight comparison tools and set price alerts to find the best deals on airfare.</p>
-      
-      <p>3. Consider alternative accommodation options like hostels, guesthouses, or vacation rentals.</p>
-      
-      <p>Read on to discover more money-saving tips that will help you travel further for less...</p>
-    `
-  },
-  3: {
-    title: 'Luxury Homestay Guide',
-    date: 'April 9, 2025',
-    author: 'Luxury Travel Expert',
-    image: 'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-    content: `
-      <p>Luxury homestays have revolutionized the way we experience high-end travel, offering the perfect blend of comfort, privacy, and authentic local experiences.</p>
-      
-      <p>What sets luxury homestays apart:</p>
-      
-      <p>1. Personalized service and attention to detail that exceeds traditional hotel experiences.</p>
-      
-      <p>2. Unique architectural designs that complement the local environment while providing modern amenities.</p>
-      
-      <p>3. Exclusive locations offering privacy and stunning views that aren't available in conventional accommodations.</p>
-      
-      <p>Discover more about how to find and book the perfect luxury homestay for your next adventure...</p>
-    `
+const MobileAd = styled.div`
+  display: none;
+  
+  @media (max-width: 968px) {
+    display: block;
+    margin: 20px 0;
   }
-};
+`;
+
+const InArticleAd = styled.div`
+  margin: 30px 0;
+  
+  @media (max-width: 968px) {
+    display: none;
+  }
+`;
+
+const TagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+`;
+
+const Tag = styled.span`
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+`;
+
+const ErrorContainer = styled.div`
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.6);
+`;
 
 const BlogDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const blog = blogData[id];
+  const [blog, setBlog] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (!blog) {
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        setLoading(true);
+        const response = await getBlogById(id);
+        setBlog(response.data);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching blog:', err);
+        setError('Blog not found or failed to load.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlog();
+  }, [id]);
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  // Insert ad into content after 2 paragraphs
+  const renderContentWithAds = (content) => {
+    if (!content) return null;
+    
+    // Split content by </p> to find paragraph breaks
+    const parts = content.split('</p>');
+    const result = [];
+    
+    parts.forEach((part, index) => {
+      if (part.trim()) {
+        result.push(
+          <span key={index} dangerouslySetInnerHTML={{ __html: part + '</p>' }} />
+        );
+        
+        // Insert in-article ad after the 2nd paragraph
+        if (index === 1) {
+          result.push(
+            <InArticleAd key="in-article-ad">
+              <AdPlacement variant="in-article" />
+            </InArticleAd>
+          );
+        }
+      }
+    });
+    
+    return result;
+  };
+
+  if (loading) {
     return (
-      <Container>
-        <BackButton onClick={() => navigate('/blogs')}>← Back to Blogs</BackButton>
-        <h2>Blog not found</h2>
-      </Container>
+      <PageWrapper>
+        <MainContent>
+          <BackButton onClick={() => navigate('/blogs')}>← Back to Blogs</BackButton>
+          <LoadingContainer>Loading article...</LoadingContainer>
+        </MainContent>
+      </PageWrapper>
+    );
+  }
+
+  if (error || !blog) {
+    return (
+      <PageWrapper>
+        <MainContent>
+          <BackButton onClick={() => navigate('/blogs')}>← Back to Blogs</BackButton>
+          <ErrorContainer>
+            <h2>Oops! Blog not found</h2>
+            <p>{error}</p>
+          </ErrorContainer>
+        </MainContent>
+      </PageWrapper>
     );
   }
 
   return (
-    <Container>
-      <BackButton onClick={() => navigate('/blogs')}>← Back to Blogs</BackButton>
-      <BlogHeader>
-        <Title>{blog.title}</Title>
-        <MetaInfo>
-          <span>By {blog.author}</span>
-          <span>•</span>
-          <span>{blog.date}</span>
-        </MetaInfo>
-      </BlogHeader>
-      <FeaturedImage src={blog.image} alt={blog.title} />
-      <Content dangerouslySetInnerHTML={{ __html: blog.content }} />
-    </Container>
+    <PageWrapper>
+      <MainContent>
+        <BackButton onClick={() => navigate('/blogs')}>← Back to Blogs</BackButton>
+        
+        <BlogHeader>
+          <CategoryTag>{blog.category}</CategoryTag>
+          <Title>{blog.title}</Title>
+          <MetaInfo>
+            <MetaItem>
+              <span>👤</span>
+              <span>{blog.author?.name || 'Travel Expert'}</span>
+            </MetaItem>
+            <MetaItem>
+              <span>📅</span>
+              <span>{formatDate(blog.publishedAt)}</span>
+            </MetaItem>
+            <MetaItem>
+              <span>⏱️</span>
+              <span>{blog.readTime} min read</span>
+            </MetaItem>
+            <MetaItem>
+              <span>👁️</span>
+              <span>{blog.viewCount} views</span>
+            </MetaItem>
+          </MetaInfo>
+        </BlogHeader>
+        
+        <FeaturedImage src={blog.featuredImage} alt={blog.title} />
+        
+        {/* Mobile ad - shown on small screens */}
+        <MobileAd>
+          <AdPlacement variant="mobile-banner" />
+        </MobileAd>
+        
+        <Content>
+          {renderContentWithAds(blog.content)}
+          
+          {blog.tags && blog.tags.length > 0 && (
+            <TagsContainer>
+              {blog.tags.map((tag, index) => (
+                <Tag key={index}>#{tag}</Tag>
+              ))}
+            </TagsContainer>
+          )}
+        </Content>
+      </MainContent>
+      
+      {/* Desktop sidebar */}
+      <Sidebar>
+        <StickyWrapper>
+          <AdPlacement variant="sidebar" margin="0 0 20px 0" />
+          <AdPlacement variant="between-posts" margin="0" />
+        </StickyWrapper>
+      </Sidebar>
+    </PageWrapper>
   );
 };
 
